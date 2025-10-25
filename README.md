@@ -6,7 +6,7 @@ Third year Bsc IT project using Laravel + React.
 
 1. Clone the repository - git clone https://github.com/RafikiRick/Mzansi-Budget-Buddy.git
 2. cd project folder
-3. # Install dependencies - [Composer](https://getcomposer.org/) and [npm](https://nodejs.org/en/download) OR use [Herd](https://herd.laravel.com/windows)  
+3. Install dependencies - [Composer](https://getcomposer.org/) and [npm](https://nodejs.org/en/download) OR use [Herd](https://herd.laravel.com/windows)  
 4. Copy `.env.example` to `.env` (In project folder, top level ./)
 5. Generate app key: `php artisan key:generate`
 6. Run migrations: `php artisan migrate`
