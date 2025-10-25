@@ -1,5 +1,5 @@
 const Ziggy = {
-    url: 'http:\/\/localhost:8000',
+    url: 'http://localhost:8000',
     port: 8000,
     defaults: {},
     routes: {
@@ -11,7 +11,7 @@ const Ziggy = {
             methods: ['GET', 'HEAD'],
         },
         'password.reset': {
-            uri: 'reset-password\/{token}',
+            uri: 'reset-password/{token}',
             methods: ['GET', 'HEAD'],
             parameters: ['token'],
         },
@@ -20,28 +20,28 @@ const Ziggy = {
         register: { uri: 'register', methods: ['GET', 'HEAD'] },
         'register.store': { uri: 'register', methods: ['POST'] },
         'verification.notice': {
-            uri: 'email\/verify',
+            uri: 'email/verify',
             methods: ['GET', 'HEAD'],
         },
         'verification.verify': {
-            uri: 'email\/verify\/{id}\/{hash}',
+            uri: 'email/verify/{id}/{hash}',
             methods: ['GET', 'HEAD'],
             parameters: ['id', 'hash'],
         },
         'verification.send': {
-            uri: 'email\/verification-notification',
+            uri: 'email/verification-notification',
             methods: ['POST'],
         },
         'password.confirm': {
-            uri: 'user\/confirm-password',
+            uri: 'user/confirm-password',
             methods: ['GET', 'HEAD'],
         },
         'password.confirmation': {
-            uri: 'user\/confirmed-password-status',
+            uri: 'user/confirmed-password-status',
             methods: ['GET', 'HEAD'],
         },
         'password.confirm.store': {
-            uri: 'user\/confirm-password',
+            uri: 'user/confirm-password',
             methods: ['POST'],
         },
         'two-factor.login': {
@@ -53,53 +53,53 @@ const Ziggy = {
             methods: ['POST'],
         },
         'two-factor.enable': {
-            uri: 'user\/two-factor-authentication',
+            uri: 'user/two-factor-authentication',
             methods: ['POST'],
         },
         'two-factor.confirm': {
-            uri: 'user\/confirmed-two-factor-authentication',
+            uri: 'user/confirmed-two-factor-authentication',
             methods: ['POST'],
         },
         'two-factor.disable': {
-            uri: 'user\/two-factor-authentication',
+            uri: 'user/two-factor-authentication',
             methods: ['DELETE'],
         },
         'two-factor.qr-code': {
-            uri: 'user\/two-factor-qr-code',
+            uri: 'user/two-factor-qr-code',
             methods: ['GET', 'HEAD'],
         },
         'two-factor.secret-key': {
-            uri: 'user\/two-factor-secret-key',
+            uri: 'user/two-factor-secret-key',
             methods: ['GET', 'HEAD'],
         },
         'two-factor.recovery-codes': {
-            uri: 'user\/two-factor-recovery-codes',
+            uri: 'user/two-factor-recovery-codes',
             methods: ['GET', 'HEAD'],
         },
         'two-factor.regenerate-recovery-codes': {
-            uri: 'user\/two-factor-recovery-codes',
+            uri: 'user/two-factor-recovery-codes',
             methods: ['POST'],
         },
-        home: { uri: '\/', methods: ['GET', 'HEAD'] },
+        home: { uri: '/', methods: ['GET', 'HEAD'] },
         dashboard: { uri: 'dashboard', methods: ['GET', 'HEAD'] },
-        'profile.edit': { uri: 'settings\/profile', methods: ['GET', 'HEAD'] },
-        'profile.update': { uri: 'settings\/profile', methods: ['PATCH'] },
-        'profile.destroy': { uri: 'settings\/profile', methods: ['DELETE'] },
+        'profile.edit': { uri: 'settings/profile', methods: ['GET', 'HEAD'] },
+        'profile.update': { uri: 'settings/profile', methods: ['PATCH'] },
+        'profile.destroy': { uri: 'settings/profile', methods: ['DELETE'] },
         'user-password.edit': {
-            uri: 'settings\/password',
+            uri: 'settings/password',
             methods: ['GET', 'HEAD'],
         },
-        'user-password.update': { uri: 'settings\/password', methods: ['PUT'] },
+        'user-password.update': { uri: 'settings/password', methods: ['PUT'] },
         'appearance.edit': {
-            uri: 'settings\/appearance',
+            uri: 'settings/appearance',
             methods: ['GET', 'HEAD'],
         },
         'two-factor.show': {
-            uri: 'settings\/two-factor',
+            uri: 'settings/two-factor',
             methods: ['GET', 'HEAD'],
         },
         'storage.local': {
-            uri: 'storage\/{path}',
+            uri: 'storage/{path}',
             methods: ['GET', 'HEAD'],
             wheres: { path: '.*' },
             parameters: ['path'],
