@@ -18,12 +18,28 @@
   animation: float 3s ease-in-out infinite;
 }
 
+/* --- Custom Cravelo Font Loading --- */
+@font-face {
+    font-family: 'Cravelo DEMO';
+    /* IMPORTANT: Adjust the path if you saved the font elsewhere */
+    src: url('/fonts/Cravelo DEMO.otf') format('opentype'); 
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; 
+}
+/* --- End Cravelo Font Loading --- */
+
+
 @theme {
     /* Define your custom theme color utilities */
     --font-sans:
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
+    
+    /* NEW: Define a custom CSS variable for headings using Cravelo */
+    --font-heading: 
+        'Cravelo DEMO', var(--font-sans); 
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -135,6 +151,7 @@
     --sidebar-ring: oklch(0.439 0 0);
 }
 
+
 @layer base {
     * {
         @apply border-border;
@@ -143,5 +160,10 @@
     body {
         @apply bg-background text-foreground;
         scroll-behavior: smooth;
+    }
+    
+    /* NEW: Define a utility class for headings using the CSS variable */
+    .font-cravelo {
+        font-family: var(--font-heading);
     }
 }

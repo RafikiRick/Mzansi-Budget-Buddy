@@ -35,13 +35,14 @@ const useTheme = () => {
 }
 
 
-// --- Helper Components Defined Inside Welcome (to keep it a single file) ---
+// --- Helper Components Defined Inside Welcome ---
 
-// 1. Feature Card Component
+// 1. Feature Card Component 
 const FeatureCard: React.FC<{ icon: string; title: string; description: string }> = ({ icon, title, description }) => (
-    <div className="p-6 space-y-3 rounded-xl shadow-xl transition-all duration-300
+    <div className="p-6 space-y-3 rounded-xl transition-all duration-300
                     bg-card text-card-foreground
-                    hover:shadow-2xl hover:scale-[1.01] border border-border">
+                    shadow-2xl shadow-foreground/10 dark:shadow-black/30 
+                    hover:shadow-3xl hover:shadow-primary/20 hover:scale-[1.02] border border-border">
         <div className="p-3 inline-block rounded-full bg-secondary">
             <span className="text-2xl text-secondary-foreground">
                 {icon}
@@ -71,11 +72,11 @@ const AboutSection: React.FC = () => (
     <section id="about-us" className="py-20 px-6 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 bg-card rounded-xl shadow-xl border border-border">
         
         <div className="md:w-1/2 text-center md:text-left space-y-6">
-            <h2 className="text-4xl font-extrabold text-foreground">
+            <h2 className="text-4xl font-extrabold text-foreground font-cravelo">
                 Hey! Welcome to <span className="text-primary">Mzansi Budget Buddy</span> 
             </h2>
             <p className="text-xl text-muted-foreground leading-relaxed">
-                We developed Mzansi Budget Buddy with a clear mission: to empower South Africans to navigate the complexities of personal finance, especially in the face of recent **inflation and rising living costs**.
+                We developed Mzansi Budget Buddy with a clear mission: to empower South Africans to navigate the complexities of personal finance, especially in the face of recent inflation and rising living costs.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
                 Our goal is to provide intuitive tools and relevant local insights to help you track your spending, compare prices, set achievable savings goals, and ultimately, gain peace of mind about your financial future.
@@ -100,8 +101,8 @@ const AboutSection: React.FC = () => (
 );
 
 
-// 4. Contact Section Component (FINAL FIXES APPLIED)
-const ContactImage = "/images/mascot1.png"; // Using the mascot image for the contact form
+// 4. Contact Section Component
+const ContactImage = "../images/mascot1.png"; 
 
 const ContactSection: React.FC = () => {
     const [status, setStatus] = useState<'' | 'success' | 'error'>('');
@@ -145,7 +146,7 @@ const ContactSection: React.FC = () => {
     return (
         <section id="contact" className="py-20 px-6 max-w-7xl mx-auto">
             <div className="text-center mb-12">
-                <h2 className="text-4xl font-extrabold text-foreground">
+                <h2 className="text-4xl font-extrabold text-foreground font-cravelo">
                     Get In Touch!
                 </h2>
                 <p className="mt-4 text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -155,15 +156,12 @@ const ContactSection: React.FC = () => {
 
             <div className="flex flex-col md:flex-row gap-8 items-start bg-card p-10 rounded-xl shadow-2xl border border-border">
                 
-                {/* Left Side: Static Image (Masot2) - FIXED SIZING */}
-                {/* Changed md:w-1/4 to give the form more room. Removed video tag. */}
+                {/* Left Side: Static Image (Masot2) */}
                 <div className="w-full md:w-1/4 flex flex-col items-center justify-center p-4">
-                    {/* Fixed: Ensure container is transparent */}
                     <div className="bg-transparent rounded-lg">
                          <img 
-                            src={ContactImage} // Using static image
+                            src={ContactImage} 
                             alt="Mzansi Budget Buddy Mascot" 
-                            // Applied max-size constraints
                             className="max-w-full h-auto max-h-60 object-contain" 
                         />
                     </div>
@@ -172,9 +170,9 @@ const ContactSection: React.FC = () => {
                     </p>
                 </div>
 
-                {/* Right Side: Contact Form - FIXED WIDTH */}
+                {/* Right Side: Contact Form */}
                 <div className="w-full md:w-3/4 space-y-6"> 
-                    <h3 className="text-2xl font-bold text-foreground">Send us a quick message</h3>
+                    <h3 className="text-2xl font-bold text-foreground font-cravelo">Send us a quick message</h3>
 
                     <div id="contact-status">
                         {status === 'success' && (
@@ -254,7 +252,8 @@ export default function Welcome({
 }) {
     const { auth } = usePage<SharedData>().props;
     const { theme, toggleTheme } = useTheme(); 
-    const BackgroundImage = "/images/green.jpg"; 
+    const BackgroundImage = "/images/green.png"; 
+    const PastelBackground = "/images/pastel.jpg"; 
 
     return (
         <>
@@ -273,7 +272,7 @@ export default function Welcome({
                     <nav className="flex items-center justify-between mx-auto max-w-7xl">
                         
                         {/* Logo/Name */}
-                        <h1 className="text-3xl font-extrabold text-primary">
+                        <h1 className="text-3xl font-extrabold text-primary font-cravelo">
                             Mzansi Budget Buddy
                         </h1>
                         
@@ -324,7 +323,7 @@ export default function Welcome({
                 </header>
 
                 <main>
-                    {/* 2. HERO SECTION - USING IMAGE BACKGROUND */}
+                    {/* 2. HERO SECTION - UPDATED FOR 3D GOLD CARD EFFECT */}
                     <div 
                         className="relative overflow-hidden bg-cover bg-center" 
                         style={{ backgroundImage: `url(${BackgroundImage})` }}
@@ -333,12 +332,34 @@ export default function Welcome({
                         <div className="absolute inset-0 bg-background/50 dark:bg-background/80 mix-blend-multiply"></div> 
 
                         <section className="py-24 px-6 max-w-7xl mx-auto text-center relative z-10">
-                            <h2 className="text-6xl font-extrabold tracking-tight mb-4 text-white dark:text-white">
-                                Take control of your money — the <span className="text-primary/70">Mzansi way</span> 
+                            <h2 className="text-6xl md:text-7xl tracking-tight mb-4 text-primary font-cravelo">
+                                The Next Era Of Mzansi Finance...
                             </h2>
-                            <p className="text-xl max-w-3xl mx-auto mb-10 text-gray-200 dark:text-gray-300">
-                                The simple, smart way for South Africans to track spending, compare prices, and reach their savings goals.
+                            <p className="text-xl max-w-3xl mx-auto mb-16 text-foreground/90">
+                                Take control of your money, spending, and savings — the smart, secure, and sophisticated Mzansi way.
                             </p>
+
+                            {/* --- 3D Element (Gold Card Image) --- */}
+                            <div className="flex justify-center items-center mb-16">
+                                <div className="relative p-8 rounded-2xl bg-primary/20 
+                                            shadow-[0_25px_50px_-12px_rgba(var(--primary-rgb),0.5)] 
+                                            dark:shadow-[0_25px_50px_-12px_rgba(var(--primary-rgb),0.3)] 
+                                            transform hover:scale-[1.05] transition-transform duration-500">
+                                    
+                                    {/* The Gold Card Image */}
+                                    <img 
+                                        src="/images/money.png" 
+                                        alt="Mzansi Gold Credit Card" 
+                                        className="max-w-xs md:max-w-md h-auto object-contain rounded-lg 
+                                                   shadow-2xl shadow-primary/70 transform rotate-x-12"
+                                    />
+                                    
+                                    {/* Subtle Glow/Halo for depth */}
+                                    <div className="absolute inset-0 m-auto w-48 h-48 bg-primary/20 rounded-full blur-3xl opacity-50 z-[-1]"></div>
+                                </div>
+                            </div>
+                            {/* --- End 3D Element --- */}
+
                             <div className="space-x-4">
                                 <Link
                                     href={register()}
@@ -355,46 +376,48 @@ export default function Welcome({
                                     Learn More
                                 </a>
                             </div>
-                            
-                            {/* Placeholder for an app screenshot or image */}
-                            <div className="mt-16 w-full h-[400px] border-4 border-white/50 rounded-xl flex items-center justify-center bg-card/20 shadow-inner">
-                                <span className="text-xl text-white/80">
-                                    [Placeholder for Mzansi Budget Buddy App Dashboard Screenshot]
-                                </span>
-                            </div>
                         </section>
                     </div>
 
                     {/* 3. ABOUT SECTION */}
                     <AboutSection /> 
 
-                    {/* 4. FEATURE SECTION (The Core Value Props) */}
-                    <section className="py-20 px-6 max-w-7xl mx-auto">
-                        <div className="text-center mb-12">
-                            <h2 className="text-4xl font-extrabold">
-                                Budgeting, simplified for you!
-                            </h2>
-                            <p className="mt-4 text-xl text-muted-foreground max-w-3xl mx-auto">
-                                Manage your finances and save smarter with local tools.
-                            </p>
-                        </div>
-                        <div className="grid md:grid-cols-3 gap-8">
-                            <FeatureCard icon="📈" title="Track Your Spending - Local Context" description="Easily log expenses in ZAR with categories tailored for SA: Taxi Fare, Spaza Shop, and Eskom Bills."/>
-                            <FeatureCard icon="💰" title="Set and Smash Savings Goals" description="Define goals (e.g., 'R5k for December trip'), visualize progress, and stay motivated."/>
-                            <FeatureCard icon="🛒" title="Local Price Compare Tool" description="Find the best deals on essentials across Shoprite, Checkers, PnP, and Woolies."/>
-                            <FeatureCard icon="⛽" title="Fuel & Data Alerts" description="Receive timely updates on petrol/diesel prices and data bundle specials."/>
-                            <FeatureCard icon="💡" title="Loadshedding Cost Tracker" description="Monitor the true monthly cost of generators, gas, and inverter usage due to power cuts."/>
-                            <FeatureCard icon="🤖" title="AI-Powered Insights" description="Get personalized, actionable tips on where to cut costs based on your Mzansi spending."/>
-                        </div>
-                    </section>
+                    {/* 4. FEATURE SECTION (BUDGETING SIMPLIFIED) - WITH PASTEL BACKGROUND */}
+                    <div 
+                        className="relative overflow-hidden bg-cover bg-center py-20"
+                        style={{ backgroundImage: `url(${PastelBackground})` }}
+                    >
+                        {/* Inner Container for Content */}
+                        <section className="px-6 max-w-7xl mx-auto relative z-10">
+                            <div className="text-center mb-12">
+                                <h2 className="text-4xl font-extrabold text-foreground font-cravelo">
+                                    Budgeting, simplified for you!
+                                </h2>
+                                <p className="mt-4 text-xl text-muted-foreground max-w-3xl mx-auto">
+                                    Manage your finances and save smarter with local tools.
+                                </p>
+                            </div>
+                            <div className="grid md:grid-cols-3 gap-8">
+                                <FeatureCard icon="📈" title="Track Your Spending - Local Context" description="Easily log expenses in ZAR with categories tailored for SA: Taxi Fare, Spaza Shop, and Eskom Bills."/>
+                                <FeatureCard icon="💰" title="Set and Smash Savings Goals" description="Define goals (e.g., 'R5k for December trip'), visualize progress, and stay motivated."/>
+                                <FeatureCard icon="🛒" title="Local Price Compare Tool" description="Find the best deals on essentials across Shoprite, Checkers, PnP, and Woolies."/>
+                                <FeatureCard icon="⛽" title="Fuel & Data Alerts" description="Receive timely updates on petrol/diesel prices and data bundle specials."/>
+                                <FeatureCard icon="💡" title="Loadshedding Cost Tracker" description="Monitor the true monthly cost of generators, gas, and inverter usage due to power cuts."/>
+                                <FeatureCard icon="🤖" title="AI-Powered Insights" description="Get personalized, actionable tips on where to cut costs based on your Mzansi spending."/>
+                            </div>
+                        </section>
+                    </div>
                     
                     {/* 5. CONTACT SECTION */}
                     <ContactSection />
                     
-                    {/* 6. TESTIMONIAL/CALLOUT SECTION */}
-                    <section className="py-20 px-6 bg-secondary/20 max-w-full border-t border-b border-border">
-                         <div className="max-w-7xl mx-auto">
-                            <h2 className="text-3xl font-bold text-center mb-10">
+                    {/* 6. TESTIMONIAL/CALLOUT SECTION - WITH PASTEL BACKGROUND */}
+                    <div 
+                        className="relative overflow-hidden bg-cover bg-center py-20"
+                        style={{ backgroundImage: `url(${PastelBackground})` }}
+                    >
+                         <section className="px-6 max-w-7xl mx-auto relative z-10 border-t border-b border-border">
+                            <h2 className="text-3xl font-bold text-center mb-10 text-foreground font-cravelo">
                                 Loved by Money-Smart South Africans
                             </h2>
                             <div className="grid md:grid-cols-3 gap-6">
@@ -402,8 +425,9 @@ export default function Welcome({
                                 <TestimonialCard quote="I've saved R300 on my weekly Checkers trip thanks to the price tool. Simple to use and genuinely helpful." name="Palesa" location="Johannesburg"/>
                                 <TestimonialCard quote="The savings goals feature with the progress bar actually makes me excited to save. A real win for Mzansi!" name="Sipho" location="Durban"/>
                             </div>
-                         </div>
-                    </section>
+                         </section>
+                    </div>
+
                 </main>
 
                 {/* 7. FOOTER */}
