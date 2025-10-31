@@ -1,8 +1,8 @@
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
-import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
+import { Button } from '@/components/ui/button';
+import {route} from 'ziggy-js';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -16,7 +16,7 @@ export default function index() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Income" />
             <div className="m-4">
-                Hello Income!
+                <Link href={route('income.create')} ><Button>Add Income</Button></Link>
             </div>
         </AppLayout>
     );
