@@ -238,7 +238,7 @@ export default function ExpensesIndex() {
                 <div className="flex flex-col gap-3 p-2">
                     {/* Month/Timeframe Title (Uses current date) */}
                     <div className="text-xl font-extrabold text-neutral-800 dark:text-neutral-100">
-                        This Month: <span className="text-red-600 dark:text-red-400">**{currentMonthYear}**</span> 
+                        This Month: <span className="text-red-600 dark:text-red-400">{currentMonthYear}</span> 
                     </div>
                     
                     {/* Permanent Search Input */}
