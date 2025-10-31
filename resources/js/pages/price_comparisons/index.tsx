@@ -9,7 +9,6 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/price_comparisons',
     },
 ];
-
 // --- Placeholder Data ---
 const priceComparisonData = [
     {

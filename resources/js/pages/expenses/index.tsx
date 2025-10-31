@@ -1,5 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
+
 import { Head } from '@inertiajs/react';
 import React, { useState, useMemo } from 'react';
 
@@ -231,7 +232,6 @@ export default function ExpensesIndex() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Expenses" />
-            
             <div className="relative flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4 md:p-6">
                 
                 {/* --- 1. Header and Search Bar (Permanent) --- */}
