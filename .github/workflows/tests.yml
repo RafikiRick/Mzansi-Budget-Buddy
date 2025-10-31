@@ -46,5 +46,11 @@ jobs:
       - name: Generate Application Key
         run: php artisan key:generate
 
+      - name: Prepare laravel
+        run: |
+          php artisan config:clear
+          php artisan cache:clear
+          touch database/databse.sqlite
+
       - name: Tests
         run: ./vendor/bin/pest
