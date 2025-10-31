@@ -1,4 +1,3 @@
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
@@ -10,7 +9,6 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/income',
     },
 ];
-
 // --- Placeholder Data ---
 const incomeData = {
     totalIncome: 'R 38,500.00', // Total Income (This Month)
@@ -143,7 +141,6 @@ export default function IncomeIndex() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Income" />
-            
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 
                 {/* --- 1. Top Summary Card (Total Income) --- */}
@@ -221,7 +218,6 @@ export default function IncomeIndex() {
                             <span>Add New Income</span>
                         </button>
                     </div>
-                </div>
             </div>
             
             {/* The Modal Component */}

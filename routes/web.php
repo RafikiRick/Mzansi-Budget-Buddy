@@ -18,9 +18,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+    //Income Routes
     Route::get('/income', [IncomeController::class, 'index'])->name('income.index');
+    Route::get('/income/create', [IncomeController::class, 'create'])->name('income.create');
+
+    // Expense Routes
     Route::get('/expenses', [ExpensesController::class, 'index'])->name('expenses.index');
+    Route::get('/expenses/create', [ExpensesController::class, 'create'])->name('expenses.create');
+
+    //Savings
     Route::get('/savings', [SavingsController::class, 'index'])->name('savings.index');
+    Route::get('/savings/create', [SavingsController::class, 'create'])->name('savings.create');
+
+    //Price Comparisons
     Route::get('/price_comparisons', [PriceComparisonController::class, 'index'])->name('price_comparisons.index');
 });
 
