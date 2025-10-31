@@ -13,14 +13,34 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { LayoutGrid } from 'lucide-react';
+import { LayoutGrid, HandCoins, Wallet, PiggyBank,ChartColumnStacked} from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
-        href: dashboard(),
+        href: '/dashboard',
         icon: LayoutGrid,
+    },
+    {
+        title: 'Income',
+        href: '/income',
+        icon: HandCoins,
+    },
+    {
+        title: 'Expenses',
+        href: '/expenses',
+    icon: Wallet,
+    },
+    {
+        title: 'Savings Goal',
+        href: '/savings',
+        icon: PiggyBank
+    },
+    {
+        title: 'Price Comparisons',
+        href: '/price_comparisons',
+        icon: ChartColumnStacked
     },
 ];
 
