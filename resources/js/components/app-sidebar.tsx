@@ -30,11 +30,11 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Expenses',
         href: '/expenses',
-        icon: Wallet,
+    icon: Wallet,
     },
     {
         title: 'Savings Goal',
-        href: '/savings_goal',
+        href: '/savings',
         icon: PiggyBank
     },
     {

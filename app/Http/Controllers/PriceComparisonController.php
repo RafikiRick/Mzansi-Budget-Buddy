@@ -8,6 +8,6 @@ use Inertia\Inertia;
 class PriceComparisonController extends Controller
 {
     public function index(){
-        return Inertia::render('pricecomparison/index', []);
+        return Inertia::render('price_comparisons/index', []);
     }
 }

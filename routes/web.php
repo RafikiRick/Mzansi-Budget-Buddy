@@ -21,7 +21,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/income', [IncomeController::class, 'index'])->name('income.index');
     Route::get('/expenses', [ExpensesController::class, 'index'])->name('expenses.index');
     Route::get('/savings', [SavingsController::class, 'index'])->name('savings.index');
-    Route::get('/pricecomparison', [PriceComparisonController::class, 'index'])->name('pricecomparison.index');
+    Route::get('/price_comparisons', [PriceComparisonController::class, 'index'])->name('price_comparisons.index');
 });
 
 require __DIR__.'/settings.php';
