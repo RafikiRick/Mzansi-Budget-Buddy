@@ -43,6 +43,7 @@
         {{-- ⭐️ FIX APPLIED HERE ⭐️ --}}
         @vite(['resources/js/app.tsx', "resources/js/pages/landing-page/{$page['component']}.tsx"])
         @inertiaHead
+        @routes
     </head>
     <body class="font-sans antialiased">
         @inertia

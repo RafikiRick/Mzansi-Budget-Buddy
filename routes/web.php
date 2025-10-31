@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\IncomeController;
+use App\Http\Controllers\ExpensesController;
+use App\Http\Controllers\SavingsController;
+use App\Http\Controllers\PriceComparisonController;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
@@ -14,6 +18,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+    Route::get('/income', [IncomeController::class, 'index'])->name('income.index');
+    Route::get('/expenses', [ExpensesController::class, 'index'])->name('expenses.index');
+    Route::get('/savings', [SavingsController::class, 'index'])->name('savings.index');
+    Route::get('/pricecomparison', [PriceComparisonController::class, 'index'])->name('pricecomparison.index');
 });
 
 require __DIR__.'/settings.php';
