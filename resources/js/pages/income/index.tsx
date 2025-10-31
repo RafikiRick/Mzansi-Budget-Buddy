@@ -1,7 +1,9 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { route } from 'ziggy-js';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -74,7 +76,7 @@ const AddIncomeModal = ({ isOpen, onClose }) => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white dark:bg-neutral-900 rounded-xl p-6 w-11/12 max-w-lg shadow-2xl">
                 <h2 className="text-xl font-bold mb-4">Add New Income Entry</h2>
-                
+
                 <form className="space-y-4">
                     {/* Placeholder for Input 1: Amount */}
                     <div>
@@ -91,7 +93,7 @@ const AddIncomeModal = ({ isOpen, onClose }) => {
                         <label className="block text-sm font-medium mb-1">Date</label>
                         <input type="date" className="w-full p-2 border rounded-lg dark:bg-neutral-800 dark:border-neutral-700" />
                     </div>
-                    
+
                     <div className="flex justify-end space-x-3 mt-6">
                         <button type="button" onClick={onClose} className="px-4 py-2 text-sm font-semibold rounded-lg border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition">
                             Cancel
@@ -110,14 +112,11 @@ const AddIncomeModal = ({ isOpen, onClose }) => {
 export default function IncomeIndex() {
     // State to manage the visibility of the Add Income Modal
     const [isModalOpen, setIsModalOpen] = useState(false);
-    
+
     // Placeholder state for active filters
     const [activeSourceFilter, setActiveSourceFilter] = useState('All');
     const [activeTimeframeFilter, setActiveTimeframeFilter] = useState('This Month');
 
-    const handleAddIncomeClick = () => {
-        setIsModalOpen(true);
-    };
 
     const handleSourceFilterClick = (source) => {
         // ⭐️ Backend/Data Logic: This would trigger a data fetch/filter function ⭐️
@@ -132,7 +131,7 @@ export default function IncomeIndex() {
         // For now, we just log the change
         console.log(`Filtering by timeframe: ${timeframe}`);
     };
-    
+
     // Placeholder for a list of filter options
     const sourceOptions = ['All', 'Salary', 'Side Hustle', 'Rental Income'];
     const timeframeOptions = ['This Month', 'Last Month', 'Last 3 Months', 'This Year'];
@@ -142,7 +141,7 @@ export default function IncomeIndex() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Income" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                
+
                 {/* --- 1. Top Summary Card (Total Income) --- */}
                 <div className="flex flex-col items-center p-6 bg-white dark:bg-neutral-900 rounded-xl shadow-lg border border-sidebar-border/70 dark:border-sidebar-border">
                     <h2 className="text-xl font-bold mb-4">Income Management</h2>
@@ -157,15 +156,15 @@ export default function IncomeIndex() {
 
                 {/* --- 2. Income History and Filters --- */}
                 <div className="flex flex-col flex-1 bg-white dark:bg-neutral-900 rounded-xl shadow-lg border border-sidebar-border/70 dark:border-sidebar-border overflow-hidden">
-                    
+
                     {/* Filters and Header */}
                     <div className="flex justify-between items-center p-4 border-b border-sidebar-border/70 dark:border-sidebar-border">
                         <h3 className="font-bold text-lg">Income History</h3>
                         <div className="flex space-x-2 text-sm">
-                            
+
                             {/* Source Filter Button (Clickable) */}
                             <div className="relative group">
-                                <button 
+                                <button
                                     onClick={() => console.log('Toggling source filter dropdown')} // Placeholder action
                                     className="px-3 py-1 bg-neutral-100 dark:bg-neutral-700 rounded-full text-xs font-medium"
                                 >
@@ -180,10 +179,10 @@ export default function IncomeIndex() {
                                     ))}
                                 </div>
                             </div>
-                            
+
                             {/* Timeframe Filter Button (Clickable) */}
                             <div className="relative group">
-                                <button 
+                                <button
                                     onClick={() => console.log('Toggling timeframe filter dropdown')} // Placeholder action
                                     className="px-3 py-1 bg-neutral-100 dark:bg-neutral-700 rounded-full text-xs font-medium"
                                 >
@@ -209,19 +208,14 @@ export default function IncomeIndex() {
                     </div>
 
                     {/* Add New Income Button (Clickable) */}
-                    <div className="p-4 border-t border-sidebar-border/70 dark:border-sidebar-border">
-                        <button 
-                            onClick={handleAddIncomeClick}
-                            className="w-full py-3 bg-yellow-500 text-neutral-900 font-bold rounded-lg shadow hover:bg-yellow-600 transition duration-150 flex items-center justify-center space-x-2"
-                        >
-                            <span>➕</span> 
-                            <span>Add New Income</span>
-                        </button>
+                    <div className="m-4">
+                        <Link href={route('income.create')} ><Button>Create a Product</Button></Link>
                     </div>
             </div>
-            
+
             {/* The Modal Component */}
             <AddIncomeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            </div>
         </AppLayout>
-    );
-}
+    )
+;}
