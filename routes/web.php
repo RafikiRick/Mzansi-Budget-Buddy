@@ -28,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //Savings
     Route::get('/savings', [SavingsController::class, 'index'])->name('savings.index');
+    Route::get('/savings/create', [SavingsController::class, 'create'])->name('savings.create');
 
     //Price Comparisons
     Route::get('/price_comparisons', [PriceComparisonController::class, 'index'])->name('price_comparisons.index');

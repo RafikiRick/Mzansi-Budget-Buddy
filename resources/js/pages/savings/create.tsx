@@ -16,20 +16,20 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function index() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title=" Add Income Statement" />
+            <Head title=" Add Savings Goal" />
             <div className="w-8/12 p-4">
                 <form action="" className="space-y-4">
                     <div className="gap-1.5">
-                        <Label htmlFor="income source">Income Source</Label>
-                        <Input placeholder="Income Source"></Input>
+                        <Label htmlFor="savings goal">Savings Goal Title</Label>
+                        <Input placeholder="Savings Goal Title"></Input>
                     </div>
                     <div className="gap-1.5">
-                        <Label htmlFor="income amount">Income amount</Label>
-                        <Input placeholder="Income Amount - R 00,00"></Input>
+                        <Label htmlFor="savings goal amount">Savings Goal Amount</Label>
+                        <Input placeholder="Savings Goal Amount - R 00,00"></Input>
                     </div>
                     <div className="gap-1.5">
-                        <Label htmlFor="income description">Income Description</Label>
-                        <Textarea placeholder="Income Description"></Textarea>
+                        <Label htmlFor="savings goal description">Savings Goal Description</Label>
+                        <Textarea placeholder="Savings Goal Description"></Textarea>
                     </div>
                     <Button type="submit">Add Income</Button>
                 </form>
