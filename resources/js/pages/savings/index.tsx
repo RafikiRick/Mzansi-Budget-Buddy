@@ -167,7 +167,7 @@ export default function SavingsGoalIndex({ savings }: PageProps) {
                 </div>
 
                 {/* --- 2. Sort/Filter and Add Goal FAB --- */}
-                <div className="flex justify-between items-center sticky top-0 bg-neutral-50/90 dark:bg-neutral-900/90 backdrop-blur-sm py-2 z-10 border-b border-neutral-200/50 dark:border-neutral-700/50 -mx-4 px-4">
+                <div className="flex justify-between items-center sticky top-0  backdrop-blur-sm py-2 z-10 border-b border-neutral-200/50 dark:border-neutral-700/50 -mx-4 px-4">
 
                     {/* Sort Dropdown */}
                     <div className="relative group">
