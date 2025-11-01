@@ -10,7 +10,10 @@ use App\Models\Income;
 class IncomeController extends Controller
 {
     public function index(){
-        $incomes = Auth::user()->incomes()->latest()->get();
+        $incomes = Auth::user()->incomes()->latest()
+        ->orderBy('date', 'desc')
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         return Inertia::render('income/index', compact('incomes'));
     }
