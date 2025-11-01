@@ -35,4 +35,31 @@ class IncomeController extends Controller
         Auth::user()->incomes()->create($validated);
         return redirect()->route('income.index')->with('success', 'Income created successfully.');
     }
+
+    public function destroy(Income $income){
+        $income->delete();
+        return redirect()->route('income.index')->with('success', 'Income deleted successfully.');
+    }
+
+    public function update(Request $request, Income $income){
+        $validated = $request->validate([
+            'amount' => 'required|numeric|min:0',
+            'title' => 'required|string|max:255',
+            'source' => 'required|string|max:255',
+            'date' => 'required|date',
+        ]);
+
+        $income->update([
+            'amount' => $request->input('amount'),
+            'title' => $request->input('title'),
+            'source' => $request->input('source'),
+            'date' => $request->input('date'),
+        ]);
+
+        return redirect()->route('income.index')->with('success', 'Income updated successfully.');
+    }
+
+    public function edit(Income $income){
+        return Inertia::render('income/edit', compact('income'));
+    }
 }
