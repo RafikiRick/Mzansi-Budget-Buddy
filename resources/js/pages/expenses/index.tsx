@@ -1,6 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import React, { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { route } from 'ziggy-js';
@@ -35,6 +35,14 @@ const ExpenseEntry = ({ entry }) => {
         });
     };
 
+    const {processing, delete: destroy} = useForm();
+    const handleDelete = (id: number, title: string) => {
+        if (confirm(`Are you sure you want to delete the ${title} expense?`)) {
+            destroy(route('expenses.destroy', id));
+        }
+    }
+
+
     return (
         <div className="flex items-center justify-between p-4 border-b border-neutral-200/60 dark:border-neutral-700/60 last:border-b-0 hover:bg-neutral-100/50 dark:hover:bg-neutral-800 transition duration-200 cursor-pointer">
             <div className="flex items-start space-x-3">
@@ -50,6 +58,29 @@ const ExpenseEntry = ({ entry }) => {
                 <p className="text-xs text-neutral-500 dark:text-neutral-400 font-medium bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded-full mt-1">
                     {entry.category}
                 </p>
+            </div>
+            <div className="flex space-x-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                <Button
+                    asChild
+                    variant="outline"
+                    size="sm"
+                    className="h-8 w-8 overflow-hidden p-0 transition-all duration-200 hover:w-16"
+                >
+                    <Link href={route('expenses.edit', entry.id)}>
+                        <span className="whitespace-nowrap">Edit</span>
+                    </Link>
+                </Button>
+                <Button
+                    disabled={processing}
+                    variant="destructive"
+                    size="sm"
+                    className="h-8 w-8 overflow-hidden p-0 transition-all duration-200 hover:w-16"
+                    onClick={() => {
+                        handleDelete(entry.id, entry.id);
+                    }}
+                >
+                    <span className="whitespace-nowrap">Delete</span>
+                </Button>
             </div>
         </div>
     );

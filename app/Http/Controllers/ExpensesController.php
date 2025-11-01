@@ -36,4 +36,30 @@ class ExpensesController extends Controller
         return redirect()->route('expenses.index')->with('success', 'Expense created successfully.');
 
     }
+
+    public function destroy(Expense $expense){
+        $expense->delete();
+        return redirect()->route('expenses.index')->with('success', 'Expense deleted successfully.');
+    }
+
+    public function update(Request $request, Expense $expense){
+        $validated = $request->validate([
+            'amount' => 'required|numeric|min:0',
+            'title' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
+            'date' => 'required|date',
+        ]);
+
+        $expense->update([
+            'amount' => $request->input('amount'),
+            'title' => $request->input('title'),
+            'category' => $request->input('category'),
+            'date' => $request->input('date'),
+        ]);
+        return redirect()->route('expenses.index')->with('success', 'Expense updated successfully.');
+
+        public function edit(Expense $expense){
+            return Inertia::render('expenses/edit', compact('expense'));
+        }
+    }
 }
