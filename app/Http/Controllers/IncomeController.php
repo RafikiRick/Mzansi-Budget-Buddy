@@ -10,7 +10,10 @@ use App\Models\Income;
 class IncomeController extends Controller
 {
     public function index(){
-        $incomes = Auth::user()->incomes()->latest()->get();
+        $incomes = Auth::user()->incomes()->latest()
+        ->orderBy('date', 'desc')
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         return Inertia::render('income/index', compact('incomes'));
     }
@@ -23,6 +26,7 @@ class IncomeController extends Controller
         //Data Validation
         $validated = $request->validate([
             'amount' => 'required|numeric|min:0',
+            'title' => 'required|string|max:255',
             'source' => 'required|string|max:255',
             'date' => 'required|date',
         ]);

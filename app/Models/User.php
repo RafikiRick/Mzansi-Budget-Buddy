@@ -51,10 +51,16 @@ class User extends Authenticatable
         ];
     }
 
-    /*Get incomes for the user*/
+    /*Mapping incomes for the user*/
     public function incomes(): HasMany
     {
         return $this->hasMany(Income::class);
+    }
+
+    /*Mapping expenses for the user*/
+    public function expenses(): HasMany
+    {
+        return $this->hasMany(Expense::class);
     }
 
 }
