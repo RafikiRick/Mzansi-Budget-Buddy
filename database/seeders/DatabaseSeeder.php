@@ -13,6 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Seeder Update
+        $this->call([
+            PriceComparisonSeeder::class,
+        ]);
+
         // User::factory(10)->create();
 
         User::firstOrCreate(
