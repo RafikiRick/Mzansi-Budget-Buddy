@@ -78,12 +78,6 @@ export function ChartPieSimple({ data }: ChartPieSimpleProps) {
 
     return (
         <div className="flex h-full w-full flex-col p-4">
-            <div className="mb-2 text-center">
-                <h3 className="text-lg font-semibold">Income Breakdown</h3>
-                <p className="text-sm text-muted-foreground">
-                    Current Month
-                </p>
-            </div>
             <div className="flex min-h-0 flex-1 items-center justify-center">
                 <ChartContainer
                     config={chartConfig}
