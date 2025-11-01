@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ExpensesController;
@@ -15,9 +16,9 @@ Route::get('/', function () {
 })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+    //Dashboard Route
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     //Income Routes
     Route::get('/income', [IncomeController::class, 'index'])->name('income.index');
     Route::get('/income/create', [IncomeController::class, 'create'])->name('income.create');
@@ -38,6 +39,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/savings', [SavingsController::class, 'index'])->name('savings.index');
     Route::get('/savings/create', [SavingsController::class, 'create'])->name('savings.create');
     Route::post('/savings', [SavingsController::class, 'store'])->name('savings.store');
+    Route::get('/savings/{saving}/edit', [SavingsController::class, 'edit'])->name('savings.edit');
+    Route::put('/savings/{saving}', [SavingsController::class, 'update'])->name('savings.update');
+    Route::delete('/savings/{saving}', [SavingsController::class, 'destroy'])->name('savings.destroy');
 
     //Price Comparisons
     Route::get('/price_comparisons', [PriceComparisonController::class, 'index'])->name('price_comparisons.index');

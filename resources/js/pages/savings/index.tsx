@@ -1,6 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import React, { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { route } from 'ziggy-js';
@@ -40,33 +40,66 @@ const GoalCard = ({ goal, onCardClick }) => {
     const isOngoing = goal.deadline === '2099-01-01' || new Date(goal.deadline) > new Date('2099-01-01');
     const formattedDeadline = isOngoing ? 'Ongoing' : new Date(goal.deadline).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 
+    const { processing, delete: destroy } = useForm();
+    const handleDelete = (id: number, name: string) => {
+        if (confirm(`Are you sure you want to delete the ${name} savings goal?`)) {
+            destroy(route('savings.destroy', id));
+        }
+    }
+
     return (
-        <div
-            onClick={() => onCardClick(goal)}
-            className="p-4 bg-white/70 dark:bg-neutral-900/70 backdrop-blur-sm rounded-xl shadow-lg border border-neutral-200/60 dark:border-neutral-700/60 cursor-pointer
-                       transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:bg-white/90 dark:hover:bg-neutral-800/80"
-        >
-            <div className="flex justify-between items-start mb-2">
-                <h3 className="text-xl font-bold text-neutral-800 dark:text-neutral-100">{goal.name}</h3>
-                <span className="text-xl font-bold text-blue-600 dark:text-blue-400">{formatCurrency(goal.saved_amount)}</span>
+        <div className="group flex items-center cursor-pointer">
+            {/* Goal Card Content */}
+            <div
+                onClick={() => onCardClick(goal)}
+                className="flex-1 p-4 bg-white/70 dark:bg-neutral-900/70 backdrop-blur-sm rounded-xl shadow-lg border border-neutral-200/60 dark:border-neutral-700/60
+                           transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:bg-white/90 dark:hover:bg-neutral-800/80"
+            >
+                <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-xl font-bold text-neutral-800 dark:text-neutral-100">{goal.name}</h3>
+                    <span className="text-xl font-bold text-blue-600 dark:text-blue-400">{formatCurrency(goal.saved_amount)}</span>
+                </div>
+
+                <div className="flex justify-between items-center text-sm text-neutral-500 dark:text-neutral-400 mb-3">
+                    <p>Due: {formattedDeadline}</p>
+                    <p>of {formatCurrency(goal.target_amount)}</p>
+                </div>
+
+                {/* Progress Bar */}
+                <div className="w-full bg-neutral-200 dark:bg-neutral-700/50 rounded-full h-2.5 mb-2 overflow-hidden">
+                    <div
+                        className={`${progressBarColor} h-full rounded-full transition-all duration-500`}
+                        style={{ width: `${Math.min(progress, 100)}%` }}
+                    ></div>
+                </div>
+
+                <div className="flex justify-between items-center text-sm">
+                    <p className={`font-semibold ${statusColorClass}`}>{goal.status}</p>
+                    <p className="font-bold text-neutral-800 dark:text-neutral-200">{progressText}</p>
+                </div>
             </div>
 
-            <div className="flex justify-between items-center text-sm text-neutral-500 dark:text-neutral-400 mb-3">
-                <p>Due: {formattedDeadline}</p>
-                <p>of {formatCurrency(goal.target_amount)}</p>
-            </div>
-
-            {/* Progress Bar */}
-            <div className="w-full bg-neutral-200 dark:bg-neutral-700/50 rounded-full h-2.5 mb-2 overflow-hidden">
-                <div
-                    className={`${progressBarColor} h-full rounded-full transition-all duration-500`}
-                    style={{ width: `${Math.min(progress, 100)}%` }}
-                ></div>
-            </div>
-
-            <div className="flex justify-between items-center text-sm">
-                <p className={`font-semibold ${statusColorClass}`}>{goal.status}</p>
-                <p className="font-bold text-neutral-800 dark:text-neutral-200">{progressText}</p>
+            {/* Edit/Delete Buttons */}
+            <div className="flex space-x-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100 ml-2">
+                <Button
+                    asChild
+                    variant="outline"
+                    size="sm"
+                    className="h-8 w-8 overflow-hidden p-0 transition-all duration-200 hover:w-16"
+                >
+                    <Link href={route('savings.edit', goal.id)}>
+                        <span className="whitespace-nowrap">Edit</span>
+                    </Link>
+                </Button>
+                <Button
+                    disabled={processing}
+                    variant="destructive"
+                    size="sm"
+                    className="h-8 w-8 overflow-hidden p-0 transition-all duration-200 hover:w-16"
+                    onClick={() => handleDelete(goal.id, goal.name)}
+                >
+                    <span className="whitespace-nowrap">Delete</span>
+                </Button>
             </div>
         </div>
     );
@@ -119,8 +152,8 @@ export default function SavingsGoalIndex({ savings }: PageProps) {
     const filteredAndSortedGoals = useMemo(() => {
         const filtered = savings.filter(goal =>
             goal.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            goal.status.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+            ( goal.status && goal.status.toLowerCase().includes(searchQuery.toLowerCase())
+        ));
         return sortGoals(filtered, sortBy);
     }, [savings, sortBy, searchQuery]);
 
