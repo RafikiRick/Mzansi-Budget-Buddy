@@ -145,7 +145,7 @@ const CategorySpendingChart = ({
             Income Category Breakdown
         </h3>
 
-        <div className="">
+        <div className="scale-130">
             <ChartPieSimple
                 data={incomeByCategory.map((cat, index) => {
                     const colors = [
