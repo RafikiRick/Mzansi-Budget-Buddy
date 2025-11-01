@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Income extends Model
 {
-    protected $fillable = ['amount', 'source', 'date', 'user_id'];
+    protected $fillable = ['amount', 'title', 'source', 'date', 'user_id'];
 
     public function user(): BelongsTo
     {

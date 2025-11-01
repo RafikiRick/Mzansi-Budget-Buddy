@@ -23,6 +23,7 @@ class IncomeController extends Controller
         //Data Validation
         $validated = $request->validate([
             'amount' => 'required|numeric|min:0',
+            'title' => 'required|string|max:255',
             'source' => 'required|string|max:255',
             'date' => 'required|date',
         ]);
