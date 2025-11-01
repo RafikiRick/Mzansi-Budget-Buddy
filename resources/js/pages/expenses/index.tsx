@@ -44,43 +44,43 @@ const ExpenseEntry = ({ entry }) => {
 
 
     return (
-        <div className="flex items-center justify-between p-4 border-b border-neutral-200/60 dark:border-neutral-700/60 last:border-b-0 hover:bg-neutral-100/50 dark:hover:bg-neutral-800 transition duration-200 cursor-pointer">
-            <div className="flex items-start space-x-3">
-                <div>
+        <div className="group flex items-center justify-between p-4 border-b border-neutral-200/60 dark:border-neutral-700/60 last:border-b-0 hover:bg-neutral-100/50 dark:hover:bg-neutral-800 transition duration-200 cursor-pointer">
+            <div className="flex items-start space-x-3 flex-1">
+                <div className="flex-1">
                     <p className="font-medium text-sm text-neutral-800 dark:text-neutral-100">{entry.title}</p>
                     <p className="text-xs text-neutral-500 dark:text-neutral-400">{formatDate(entry.date)}</p>
                 </div>
             </div>
-            <div className="text-right">
-                <p className="font-bold text-red-600 dark:text-red-400 text-sm">
-                    - R {parseFloat(entry.amount).toLocaleString('en-ZA', { minimumFractionDigits: 2 })}
-                </p>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400 font-medium bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded-full mt-1">
-                    {entry.category}
-                </p>
-            </div>
-            <div className="flex space-x-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                <Button
-                    asChild
-                    variant="outline"
-                    size="sm"
-                    className="h-8 w-8 overflow-hidden p-0 transition-all duration-200 hover:w-16"
-                >
-                    <Link href={route('expenses.edit', entry.id)}>
-                        <span className="whitespace-nowrap">Edit</span>
-                    </Link>
-                </Button>
-                <Button
-                    disabled={processing}
-                    variant="destructive"
-                    size="sm"
-                    className="h-8 w-8 overflow-hidden p-0 transition-all duration-200 hover:w-16"
-                    onClick={() => {
-                        handleDelete(entry.id, entry.id);
-                    }}
-                >
-                    <span className="whitespace-nowrap">Delete</span>
-                </Button>
+            <div className="flex items-center space-x-4">
+                <div className="text-right">
+                    <p className="font-bold text-red-600 dark:text-red-400 text-sm">
+                        - R {parseFloat(entry.amount).toLocaleString('en-ZA', { minimumFractionDigits: 2 })}
+                    </p>
+                    <p className="text-xs text-neutral-500 dark:text-neutral-400 font-medium bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded-full mt-1">
+                        {entry.category}
+                    </p>
+                </div>
+                <div className="flex space-x-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                    <Button
+                        asChild
+                        variant="outline"
+                        size="sm"
+                        className="h-8 w-8 overflow-hidden p-0 transition-all duration-200 hover:w-16"
+                    >
+                        <Link href={route('expenses.edit', entry.id)}>
+                            <span className="whitespace-nowrap">Edit</span>
+                        </Link>
+                    </Button>
+                    <Button
+                        disabled={processing}
+                        variant="destructive"
+                        size="sm"
+                        className="h-8 w-8 overflow-hidden p-0 transition-all duration-200 hover:w-16"
+                        onClick={() => handleDelete(entry.id, entry.title)}
+                    >
+                        <span className="whitespace-nowrap">Delete</span>
+                    </Button>
+                </div>
             </div>
         </div>
     );

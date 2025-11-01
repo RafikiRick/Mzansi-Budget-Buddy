@@ -42,7 +42,8 @@ class ExpensesController extends Controller
         return redirect()->route('expenses.index')->with('success', 'Expense deleted successfully.');
     }
 
-    public function update(Request $request, Expense $expense){
+    public function update(Request $request, Expense $expense)
+    {
         $validated = $request->validate([
             'amount' => 'required|numeric|min:0',
             'title' => 'required|string|max:255',
@@ -57,9 +58,9 @@ class ExpensesController extends Controller
             'date' => $request->input('date'),
         ]);
         return redirect()->route('expenses.index')->with('success', 'Expense updated successfully.');
-
+    }
         public function edit(Expense $expense){
             return Inertia::render('expenses/edit', compact('expense'));
-        }
+
     }
 }
