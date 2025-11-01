@@ -26,6 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Expense Routes
     Route::get('/expenses', [ExpensesController::class, 'index'])->name('expenses.index');
     Route::get('/expenses/create', [ExpensesController::class, 'create'])->name('expenses.create');
+    Route::post('/expenses', [ExpensesController::class, 'store'])->name('expenses.store');
 
     //Savings
     Route::get('/savings', [SavingsController::class, 'index'])->name('savings.index');
