@@ -2,7 +2,8 @@ import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
+import { route } from 'ziggy-js';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -33,17 +34,23 @@ const summaryData = {
 };
 
 // --- MetricCard Component (Enhanced with Hyperlink Capability) ---
-const MetricCard = ({ title, value, colorClass = '', href, hoverBgColor }) => {
+const MetricCard = ({
+                        title ='',
+                        value = '',
+                        colorClass = '',
+                        href = '',
+                        hoverBgColor = ''
+}) => {
     // NOTE: In a real Inertia/React application, you would use 'router.visit(href)' here.
     const handleClick = () => {
-        console.log(`Navigating to: ${href}`);
-        // Example of a client-side navigation that would occur in a full application
-        // window.location.href = href; 
+        if (href) {
+            router.visit(href);
+        }
     };
 
     return (
         // Added 'cursor-pointer' and enhanced styling for hover/click feel
-        <div 
+        <div
             onClick={handleClick}
             className={`relative aspect-video overflow-hidden rounded-xl border border-neutral-200/60 dark:border-neutral-700/60 p-4 flex flex-col justify-between cursor-pointer transition-all duration-300 ease-out hover:scale-[1.03] hover:shadow-xl bg-gradient-to-br from-white to-neutral-50/50 dark:from-neutral-900 dark:to-neutral-800/50 group ${hoverBgColor}`}
         >
@@ -54,7 +61,7 @@ const MetricCard = ({ title, value, colorClass = '', href, hoverBgColor }) => {
                 R {value.toLocaleString('en-ZA', { minimumFractionDigits: 2 })}
             </p>
             <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20 opacity-10 transition-opacity duration-300 group-hover:opacity-5" />
-            
+
             {/* Subtle gradient overlay on hover */}
             <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-white/20 dark:to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
         </div>
@@ -65,7 +72,7 @@ const MetricCard = ({ title, value, colorClass = '', href, hoverBgColor }) => {
 const FinancialOversightBox = ({ income, expenses }) => {
     // ⭐️ LOGIC based on user data ⭐️
     const expenseRatio = (expenses / income) * 100;
-    
+
     let adviceTitle = 'Excellent Financial Health!';
     let adviceBody = 'Your spending is well under control. Keep up the great work saving and growing your wealth.';
     let adviceColor = 'text-green-500 dark:text-green-400';
@@ -83,9 +90,9 @@ const FinancialOversightBox = ({ income, expenses }) => {
     return (
         <div className="bg-gradient-to-br from-neutral-50 to-neutral-100/50 dark:from-neutral-800 dark:to-neutral-800/80 rounded-xl p-6 border border-neutral-200/60 dark:border-neutral-700/60 h-full transition-all duration-300 hover:shadow-lg hover:scale-[1.01] hover:bg-white/90 dark:hover:bg-neutral-800/90">
             <h3 className="text-xl font-bold mb-4 flex items-center text-neutral-800 dark:text-neutral-100">
-                Financial Oversight 
+                Financial Oversight
             </h3>
-            
+
             <p className={`text-lg font-semibold ${adviceColor} transition-colors duration-300`}>{adviceTitle}</p>
             <p className="text-sm text-neutral-600 dark:text-neutral-300 mt-2 leading-relaxed">{adviceBody}</p>
 
@@ -100,7 +107,7 @@ const FinancialOversightBox = ({ income, expenses }) => {
                 </div>
                 <div className="flex justify-between items-center text-sm p-2 rounded-lg bg-white/50 dark:bg-neutral-700/30 transition-colors duration-200 hover:bg-white/80 dark:hover:bg-neutral-700/50">
                     <span className="text-neutral-500 dark:text-neutral-400">Projected Savings:</span>
-                    <span className="font-semibold text-blue-500 dark:text-blue-400">R 5,000.00</span> 
+                    <span className="font-semibold text-blue-500 dark:text-blue-400">R 5,000.00</span>
                 </div>
             </div>
         </div>
@@ -112,7 +119,7 @@ const CategorySpendingChart = () => (
     <div className="relative overflow-hidden rounded-xl border border-neutral-200/60 dark:border-neutral-700/60 p-4 mb-4 bg-gradient-to-br from-white to-neutral-50/50 dark:from-neutral-900 dark:to-neutral-800/50 transition-all duration-300 hover:shadow-lg hover:scale-[1.01] hover:bg-white/90 dark:hover:bg-neutral-800/90">
         <h3 className="text-lg font-semibold mb-4 text-neutral-800 dark:text-neutral-100">Income Category Breakdown</h3>
         <div className="size-24 rounded-full bg-gradient-to-br from-neutral-200 to-neutral-300 dark:from-neutral-700 dark:to-neutral-600 flex items-center justify-center text-xs text-neutral-600 dark:text-neutral-400 mx-auto shadow-inner transition-transform duration-300 hover:scale-110">
-            
+
 
 [Image of Donut Chart]
 
@@ -132,16 +139,16 @@ const CategorySpendingChart = () => (
 const RecentTransactionsList = () => (
     <div className="relative overflow-hidden rounded-xl border border-neutral-200/60 dark:border-neutral-700/60 p-4 bg-gradient-to-br from-white to-neutral-50/50 dark:from-neutral-900 dark:to-neutral-800/50 transition-all duration-300 hover:shadow-lg hover:scale-[1.01] hover:bg-white/90 dark:hover:bg-neutral-800/90">
         <h3 className="text-lg font-semibold mb-2 text-neutral-800 dark:text-neutral-100">Recent Transactions</h3>
-        
+
         {/* Divider below heading */}
         <div className="h-px bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-600 to-transparent mb-4" />
-        
+
         {/* Scrollable transactions list */}
         <div className="max-h-64 overflow-y-auto pr-2">
             <ul className="space-y-3">
                 {summaryData.recentTransactions.map((transaction, index) => (
-                    <li 
-                        key={index} 
+                    <li
+                        key={index}
                         className="flex justify-between items-center text-sm p-3 rounded-lg transition-all duration-200 hover:bg-neutral-100/70 dark:hover:bg-neutral-700/50 hover:shadow-sm"
                     >
                         <div className="flex flex-col">
@@ -155,7 +162,7 @@ const RecentTransactionsList = () => (
                 ))}
             </ul>
         </div>
-        
+
     </div>
 );
 
@@ -165,51 +172,51 @@ export default function Dashboard() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-            
+
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                
+
                 {/* 1. Three Boxes on Top for Key Metrics - Now Hyperlinks */}
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    
+
                     {/* Box 1: Total Income -> Links to /income */}
-                    <MetricCard 
-                        title="Total Income (This Month)" 
-                        value={summaryData.totalIncome} 
+                    <MetricCard
+                        title="Total Income (This Month)"
+                        value={summaryData.totalIncome}
                         colorClass="text-green-600 dark:text-green-400"
-                        href="/income" // <--- Hyperlink target
                         hoverBgColor="hover:bg-green-100/60 dark:hover:bg-green-900/30"
+                        href={route('income.index')} // <--- Hyperlink target
                     />
 
                     {/* Box 2: Total Expenses -> Links to /expenses */}
-                    <MetricCard 
-                        title="Total Expenses (This Month)" 
-                        value={summaryData.totalExpenses} 
+                    <MetricCard
+                        title="Total Expenses (This Month)"
+                        value={summaryData.totalExpenses}
                         colorClass="text-red-600 dark:text-red-400"
-                        href="/expenses" // <--- Hyperlink target
+                        href={route('expenses.index')} // <--- Hyperlink target
                         hoverBgColor="hover:bg-red-100/60 dark:hover:bg-red-900/30"
                     />
 
                     {/* Box 3: Remaining Budget -> Links to /savings-goal */}
-                    <MetricCard 
-                        title="Remaining Budget" 
-                        value={summaryData.remainingBudget} 
+                    <MetricCard
+                        title="Remaining Budget"
+                        value={summaryData.remainingBudget}
                         colorClass="text-blue-600 dark:text-blue-400"
-                        href="/savings" // <--- Hyperlink target
+                        href={route('savings.index')} // <--- Hyperlink target
                         hoverBgColor="hover:bg-blue-100/60 dark:hover:bg-blue-900/30"
                     />
                 </div>
-                
+
                 {/* 2. One Large Box Underneath for Main Content/Insights */}
                 <div className="flex-1 overflow-hidden rounded-xl border border-neutral-200/60 dark:border-neutral-700/60 p-4 bg-white/50 dark:bg-neutral-800/50">
-                    
+
                     {/* This large box is now split into two main areas */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-full">
-                        
+
                         {/* Left Column (Financial Oversight) - Spans one column */}
                         <div className="md:col-span-1">
-                            <FinancialOversightBox 
-                                income={summaryData.totalIncome} 
-                                expenses={summaryData.totalExpenses} 
+                            <FinancialOversightBox
+                                income={summaryData.totalIncome}
+                                expenses={summaryData.totalExpenses}
                             />
                         </div>
 
@@ -221,7 +228,7 @@ export default function Dashboard() {
 
                     </div>
                 </div>
-                
+
             </div>
         </AppLayout>
     );
