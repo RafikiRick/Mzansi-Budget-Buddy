@@ -12,26 +12,13 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-// --- Placeholder Data & Logic ---
-const summaryData = {
-    totalIncome: 25000.00, // Changed to number for calculation
-    totalExpenses: 8500.00, // Changed to number for calculation
-    remainingBudget: 16500.00,
-    categories: [
-        { name: 'Salary', percentage: '65%', amount: 'R 16,250', color: 'text-green-500' },
-        { name: 'Side Hustle', percentage: '25%', amount: 'R 6,250', color: 'text-yellow-500' },
-    ],
-    recentTransactions: [
-        { name: 'Salary Deposit', amount: '+ R 15,000', date: 'Oct 28', type: 'income' },
-        { name: 'Etsy Sale', amount: '+ R 500', date: 'Oct 27', type: 'income' },
-        { name: 'Groceries', amount: '- R 800', date: 'Oct 26', type: 'expense' },
-        { name: 'Rent Payment', amount: '- R 3,500', date: 'Oct 25', type: 'expense' },
-        { name: 'Electricity', amount: '- R 450', date: 'Oct 24', type: 'expense' },
-        { name: 'Freelance Project', amount: '+ R 2,500', date: 'Oct 23', type: 'income' },
-        { name: 'Restaurant', amount: '- R 320', date: 'Oct 22', type: 'expense' },
-        { name: 'Gas', amount: '- R 600', date: 'Oct 21', type: 'expense' },
-    ]
-};
+interface DashboardProps {
+    totalIncome: number;
+    totalExpenses: number;
+    remainingBudget: number;
+    incomeByCategory: Array<{source:string; total:number}>;
+    recentTransactions: Array<{id: number; name:string; amount:string; date: string; type:string}>;
+}
 
 // --- MetricCard Component (Enhanced with Hyperlink Capability) ---
 const MetricCard = ({
@@ -69,7 +56,7 @@ const MetricCard = ({
 };
 
 // --- Financial Oversight Component ---
-const FinancialOversightBox = ({ income, expenses }) => {
+const FinancialOversightBox = ({ income, expenses, incomeByCategory }) => {
     // ⭐️ LOGIC based on user data ⭐️
     const expenseRatio = (expenses / income) * 100;
 
@@ -103,7 +90,7 @@ const FinancialOversightBox = ({ income, expenses }) => {
                 </div>
                 <div className="flex justify-between items-center text-sm p-2 rounded-lg bg-white/50 dark:bg-neutral-700/30 transition-colors duration-200 hover:bg-white/80 dark:hover:bg-neutral-700/50">
                     <span className="text-neutral-500 dark:text-neutral-400">Total Income Sources:</span>
-                    <span className="font-semibold text-neutral-800 dark:text-neutral-200">{summaryData.categories.length}</span>
+                    <span className="font-semibold text-neutral-800 dark:text-neutral-200">{incomeByCategory.length}</span>
                 </div>
                 <div className="flex justify-between items-center text-sm p-2 rounded-lg bg-white/50 dark:bg-neutral-700/30 transition-colors duration-200 hover:bg-white/80 dark:hover:bg-neutral-700/50">
                     <span className="text-neutral-500 dark:text-neutral-400">Projected Savings:</span>
@@ -115,7 +102,7 @@ const FinancialOversightBox = ({ income, expenses }) => {
 };
 
 // --- CategorySpendingChart Component ---
-const CategorySpendingChart = () => (
+const CategorySpendingChart = ({incomeByCategory}) => (
     <div className="relative overflow-hidden rounded-xl border border-neutral-200/60 dark:border-neutral-700/60 p-4 mb-4 bg-gradient-to-br from-white to-neutral-50/50 dark:from-neutral-900 dark:to-neutral-800/50 transition-all duration-300 hover:shadow-lg hover:scale-[1.01] hover:bg-white/90 dark:hover:bg-neutral-800/90">
         <h3 className="text-lg font-semibold mb-4 text-neutral-800 dark:text-neutral-100">Income Category Breakdown</h3>
         <div className="size-24 rounded-full bg-gradient-to-br from-neutral-200 to-neutral-300 dark:from-neutral-700 dark:to-neutral-600 flex items-center justify-center text-xs text-neutral-600 dark:text-neutral-400 mx-auto shadow-inner transition-transform duration-300 hover:scale-110">
@@ -125,10 +112,10 @@ const CategorySpendingChart = () => (
 
         </div>
         <ul className="mt-4 text-sm space-y-1">
-            {summaryData.categories.map((cat, index) => (
+            {incomeByCategory.map((cat, index) => (
                 <li key={index} className="flex justify-between p-2 rounded-lg transition-all duration-200 hover:bg-neutral-100/70 dark:hover:bg-neutral-700/50">
-                    <span className={`${cat.color} font-medium`}>{cat.name}</span>
-                    <span className="text-neutral-700 dark:text-neutral-300">{cat.amount}</span>
+                    <span className="text-blue-500 font-medium">{cat.source}</span>
+                    <span className="text-neutral-700 dark:text-neutral-300">{cat.total.toLocaleString('en-ZA', {minimumFractionDigits: 2})}</span>
                 </li>
             ))}
         </ul>
@@ -136,7 +123,7 @@ const CategorySpendingChart = () => (
 );
 
 // --- RecentTransactionsList Component ---
-const RecentTransactionsList = () => (
+const RecentTransactionsList = ({recentTransactions}) => (
     <div className="relative overflow-hidden rounded-xl border border-neutral-200/60 dark:border-neutral-700/60 p-4 bg-gradient-to-br from-white to-neutral-50/50 dark:from-neutral-900 dark:to-neutral-800/50 transition-all duration-300 hover:shadow-lg hover:scale-[1.01] hover:bg-white/90 dark:hover:bg-neutral-800/90">
         <h3 className="text-lg font-semibold mb-2 text-neutral-800 dark:text-neutral-100">Recent Transactions</h3>
 
@@ -146,7 +133,7 @@ const RecentTransactionsList = () => (
         {/* Scrollable transactions list */}
         <div className="max-h-64 overflow-y-auto pr-2">
             <ul className="space-y-3">
-                {summaryData.recentTransactions.map((transaction, index) => (
+                {recentTransactions.map((transaction, index) => (
                     <li
                         key={index}
                         className="flex justify-between items-center text-sm p-3 rounded-lg transition-all duration-200 hover:bg-neutral-100/70 dark:hover:bg-neutral-700/50 hover:shadow-sm"
@@ -168,20 +155,18 @@ const RecentTransactionsList = () => (
 
 
 // --- Main Dashboard Component ---
-export default function Dashboard() {
+export default function Dashboard({ totalIncome, totalExpenses, remainingBudget, incomeByCategory, recentTransactions }: DashboardProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
 
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-
                 {/* 1. Three Boxes on Top for Key Metrics - Now Hyperlinks */}
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-
                     {/* Box 1: Total Income -> Links to /income */}
                     <MetricCard
                         title="Total Income (This Month)"
-                        value={summaryData.totalIncome}
+                        value={totalIncome}
                         colorClass="text-green-600 dark:text-green-400"
                         hoverBgColor="hover:bg-green-100/60 dark:hover:bg-green-900/30"
                         href={route('income.index')} // <--- Hyperlink target
@@ -190,7 +175,7 @@ export default function Dashboard() {
                     {/* Box 2: Total Expenses -> Links to /expenses */}
                     <MetricCard
                         title="Total Expenses (This Month)"
-                        value={summaryData.totalExpenses}
+                        value={totalExpenses}
                         colorClass="text-red-600 dark:text-red-400"
                         href={route('expenses.index')} // <--- Hyperlink target
                         hoverBgColor="hover:bg-red-100/60 dark:hover:bg-red-900/30"
@@ -199,7 +184,7 @@ export default function Dashboard() {
                     {/* Box 3: Remaining Budget -> Links to /savings-goal */}
                     <MetricCard
                         title="Remaining Budget"
-                        value={summaryData.remainingBudget}
+                        value={remainingBudget}
                         colorClass="text-blue-600 dark:text-blue-400"
                         href={route('savings.index')} // <--- Hyperlink target
                         hoverBgColor="hover:bg-blue-100/60 dark:hover:bg-blue-900/30"
@@ -207,28 +192,29 @@ export default function Dashboard() {
                 </div>
 
                 {/* 2. One Large Box Underneath for Main Content/Insights */}
-                <div className="flex-1 overflow-hidden rounded-xl border border-neutral-200/60 dark:border-neutral-700/60 p-4 bg-white/50 dark:bg-neutral-800/50">
-
+                <div className="flex-1 overflow-hidden rounded-xl border border-neutral-200/60 bg-white/50 p-4 dark:border-neutral-700/60 dark:bg-neutral-800/50">
                     {/* This large box is now split into two main areas */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-full">
-
+                    <div className="grid h-full grid-cols-1 gap-4 md:grid-cols-3">
                         {/* Left Column (Financial Oversight) - Spans one column */}
                         <div className="md:col-span-1">
                             <FinancialOversightBox
-                                income={summaryData.totalIncome}
-                                expenses={summaryData.totalExpenses}
+                                income={totalIncome}
+                                expenses={totalExpenses}
+                                incomeByCategory={incomeByCategory}
                             />
                         </div>
 
                         {/* Right Column (Category Chart & Transactions) - Spans two columns */}
-                        <div className="md:col-span-2 flex flex-col space-y-4">
-                            <CategorySpendingChart />
-                            <RecentTransactionsList />
+                        <div className="flex flex-col space-y-4 md:col-span-2">
+                            <CategorySpendingChart
+                                incomeByCategory={incomeByCategory}
+                            />
+                            <RecentTransactionsList
+                                recentTransactions={recentTransactions}
+                            />
                         </div>
-
                     </div>
                 </div>
-
             </div>
         </AppLayout>
     );
