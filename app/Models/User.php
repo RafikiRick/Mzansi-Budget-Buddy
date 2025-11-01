@@ -63,4 +63,10 @@ class User extends Authenticatable
         return $this->hasMany(Expense::class);
     }
 
+    /*Mapping savings for the user*/
+    public function savings(): HasMany
+    {
+        return $this->hasMany(Saving::class);
+    }
+
 }
