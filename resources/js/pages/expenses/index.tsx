@@ -68,10 +68,10 @@ interface PageProps {
     flash?: {
         success?: string;
     };
-    expenses: Expense[];
+    expenses?: Expense[];
 }
 
-export default function ExpensesIndex({ expenses }: PageProps) {
+export default function ExpensesIndex({ expenses = []}: PageProps) {
     const [searchQuery, setSearchQuery] = useState('');
     const [activeFilter, setActiveFilter] = useState('All');
     const { flash } = usePage<PageProps>().props;
@@ -81,7 +81,7 @@ export default function ExpensesIndex({ expenses }: PageProps) {
 
     // --- Filtering Logic with Real Data ---
     const filteredExpenses = useMemo(() => {
-        return expenses
+        return (expenses || [])
             .filter(entry => activeFilter === 'All' || entry.category === activeFilter)
             .filter(entry =>
                 entry.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -170,7 +170,7 @@ export default function ExpensesIndex({ expenses }: PageProps) {
                             ))
                         ) : (
                             <div className="p-6 text-center text-neutral-500 dark:text-neutral-400">
-                                {expenses.length === 0 ? (
+                                {(expenses || [] ).length === 0 ? (
                                     <div>
                                         <p>No expense entries yet.</p>
                                         <Button asChild className="mt-2">
