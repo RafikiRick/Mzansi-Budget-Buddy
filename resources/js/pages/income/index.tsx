@@ -86,7 +86,7 @@ const IncomeEntry = ({ entry, onEdit, }) => {
                     size="sm"
                     className="h-8 w-8 overflow-hidden p-0 transition-all duration-200 hover:w-16"
                     onClick={() => {
-                        handleDelete(entry.id, entry.id);
+                        handleDelete(entry.id, entry.title);
                     }}
                 >
                         <span className="whitespace-nowrap">Delete</span>
