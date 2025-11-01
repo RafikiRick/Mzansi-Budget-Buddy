@@ -209,7 +209,7 @@ export default function IncomeIndex() {
 
                     {/* Add New Income Button (Clickable) */}
                     <div className="m-4">
-                        <Link href={route('income.create')} ><Button>Create a Product</Button></Link>
+                        <Link href={route('income.create')} ><Button>Add New Income</Button></Link>
                     </div>
             </div>
 
