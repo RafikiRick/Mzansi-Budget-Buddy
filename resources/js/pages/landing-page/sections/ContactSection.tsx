@@ -45,7 +45,7 @@ export const ContactSection: React.FC = () => {
     return (
         <section id="contact" className="py-20 px-6 max-w-7xl mx-auto">
             <div className="text-center mb-12">
-                <h2 className="text-4xl font-extrabold text-foreground font-cravelo">
+                <h2 className="text-4xl font-extrabold text-foreground">
                     Get In Touch!
                 </h2>
                 <p className="mt-4 text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -53,88 +53,91 @@ export const ContactSection: React.FC = () => {
                 </p>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-8 items-start bg-card p-10 rounded-xl shadow-2xl border border-border">
-                
-                {/* Left Side: Static Image (Masot2) */}
-                <div className="w-full md:w-1/4 flex flex-col items-center justify-center p-4">
-                    <div className="bg-transparent rounded-lg">
-                         <img 
-                            src={ContactImage} 
-                            alt="Mzansi Budget Buddy Mascot" 
-                            className="max-w-full h-auto max-h-60 object-contain" 
-                        />
-                    </div>
-                    <p className="mt-2 text-sm text-muted-foreground text-center hidden md:block">
-                        Need help with your budget? Contact us!
-                    </p>
-                </div>
-
-                {/* Right Side: Contact Form */}
-                <div className="w-full md:w-3/4 space-y-6"> 
-                    <h3 className="text-2xl font-bold text-foreground font-cravelo">Send us a quick message</h3>
-
-                    <div id="contact-status">
-                        {status === 'success' && (
-                            <div className="p-4 text-sm font-medium rounded-lg bg-secondary/20 text-secondary-foreground border border-secondary">
-                                Success! Your message has been received and we will be in touch soon.
-                            </div>
-                        )}
-                        {status === 'error' && (
-                            <div className="p-4 text-sm font-medium rounded-lg bg-destructive/10 text-destructive border border-destructive">
-                                Error: Please correct the fields highlighted in red before submitting.
-                            </div>
-                        )}
-                    </div>
-
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        {/* NAME */}
-                        <div>
-                            <input
-                                type="text"
-                                name="name"
-                                placeholder="Your Name"
-                                value={form.name}
-                                onChange={handleChange}
-                                className={`w-full p-3 rounded-lg border-input bg-background focus:ring-2 focus:ring-primary focus:border-primary ${errors.name ? 'border-destructive' : 'border-border'}`}
-                            />
-                            {errors.name && <p className="text-xs text-destructive mt-1">{errors.name}</p>}
-                        </div>
+            <div className="max-w-4xl mx-auto">
+                <div 
+                    // Glowing Bounding Box and Hover Effect
+                    className="relative z-10 p-8 rounded-2xl border-2 border-border bg-card/70 
+                               transition duration-300 hover:shadow-2xl hover:shadow-primary/30 hover:scale-[1.01]
+                               shadow-xl dark:shadow-primary/30 shadow-foreground/40"
+                >
+                    <div className="flex flex-col md:flex-row gap-8 items-start">
                         
-                        {/* EMAIL */}
-                        <div>
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="Your Email Address"
-                                value={form.email}
-                                onChange={handleChange}
-                                className={`w-full p-3 rounded-lg border-input bg-background focus:ring-2 focus:ring-primary focus:border-primary ${errors.email ? 'border-destructive' : 'border-border'}`}
-                            />
-                            {errors.email && <p className="text-xs text-destructive mt-1">{errors.email}</p>}
+                        <div className="hidden md:flex w-full md:w-1/4 flex-col items-center justify-center p-4">
+                            <div className="bg-transparent rounded-lg">
+                                 <img 
+                                    src={ContactImage} 
+                                    alt="Mzansi Budget Buddy Mascot" 
+                                    className="max-w-full h-auto max-h-48 object-contain opacity-50"
+                                />
+                            </div>
+                            <p className="mt-2 text-sm text-muted-foreground text-center">
+                                Need help with your budget? Contact us!
+                            </p>
                         </div>
 
-                        {/* MESSAGE */}
-                        <div>
-                            <textarea
-                                name="message"
-                                placeholder="Your Message (min 10 characters)"
-                                value={form.message}
-                                onChange={handleChange}
-                                rows={5}
-                                className={`w-full p-3 rounded-lg border-input bg-background focus:ring-2 focus:ring-primary focus:border-primary resize-none ${errors.message ? 'border-destructive' : 'border-border'}`}
-                            ></textarea>
-                            {errors.message && <p className="text-xs text-destructive mt-1">{errors.message}</p>}
+                        <div className="w-full md:w-3/4 space-y-6"> 
+                            <h3 className="text-2xl font-bold text-foreground">Send us a quick message</h3>
+
+                            <div id="contact-status">
+                                {status === 'success' && (
+                                    <div className="p-4 text-sm font-medium rounded-lg bg-secondary/20 text-secondary-foreground border border-secondary">
+                                        Success! Your message has been received and we will be in touch soon.
+                                    </div>
+                                )}
+                                {status === 'error' && (
+                                    <div className="p-4 text-sm font-medium rounded-lg bg-destructive/10 text-destructive border border-destructive">
+                                        Error: Please correct the fields highlighted in red before submitting.
+                                    </div>
+                                )}
+                            </div>
+
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                <div>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        placeholder="Your Name"
+                                        value={form.name}
+                                        onChange={handleChange}
+                                        className={`w-full p-3 rounded-lg border-input bg-background focus:ring-2 focus:ring-primary focus:border-primary ${errors.name ? 'border-destructive' : 'border-border'}`}
+                                    />
+                                    {errors.name && <p className="text-xs text-destructive mt-1">{errors.name}</p>}
+                                </div>
+                                
+                                <div>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        placeholder="Your Email Address"
+                                        value={form.email}
+                                        onChange={handleChange}
+                                        className={`w-full p-3 rounded-lg border-input bg-background focus:ring-2 focus:ring-primary focus:border-primary ${errors.email ? 'border-destructive' : 'border-border'}`}
+                                    />
+                                    {errors.email && <p className="text-xs text-destructive mt-1">{errors.email}</p>}
+                                </div>
+
+                                <div>
+                                    <textarea
+                                        name="message"
+                                        placeholder="Your Message (min 10 characters)"
+                                        value={form.message}
+                                        onChange={handleChange}
+                                        rows={5}
+                                        className={`w-full p-3 rounded-lg border-input bg-background focus:ring-2 focus:ring-primary focus:border-primary resize-none ${errors.message ? 'border-destructive' : 'border-border'}`}
+                                    ></textarea>
+                                    {errors.message && <p className="text-xs text-destructive mt-1">{errors.message}</p>}
+                                </div>
+                                
+                                <button
+                                    type="submit"
+                                    className="w-full px-6 py-3 text-lg font-bold rounded-lg shadow-md transition
+                                               bg-primary text-primary-foreground hover:bg-primary/90"
+                                >
+                                    Send Message
+                                </button>
+                            </form>
                         </div>
-                        
-                        {/* BUTTON */}
-                        <button
-                            type="submit"
-                            className="w-full px-6 py-3 text-lg font-bold rounded-lg shadow-md transition
-                                       bg-primary text-primary-foreground hover:bg-primary/90"
-                        >
-                            Send Message
-                        </button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </section>

@@ -18,29 +18,13 @@
   animation: float 3s ease-in-out infinite;
 }
 
-/* --- Custom Cravelo Font Loading --- */
-@font-face {
-    font-family: 'Cravelo DEMO';
-    /* IMPORTANT: Adjust the path if you saved the font elsewhere */
-    src: url('/fonts/Cravelo DEMO.otf') format('opentype'); 
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap; 
-}
-/* --- End Cravelo Font Loading --- */
-
-
 @theme {
     /* Define your custom theme color utilities */
     --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+        'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
     
-    /* NEW: Define a custom CSS variable for headings using Cravelo */
-    --font-heading: 
-        'Cravelo DEMO', var(--font-sans); 
-
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
@@ -80,75 +64,75 @@
     --color-sidebar-ring: var(--sidebar-ring);
 }
 
-:root { /* === LIGHT MODE === */
-    --background: #FFFFFF; /* White */
-    --foreground: #8C725F; /* Chamoisee */
-    --card: #FFFFFF; /* White */
-    --card-foreground: #8C725F; /* Chamoisee */
-    --primary: #8C725F; /* Chamoisee */
-    --primary-foreground: #FFFFFF; /* White */
-    --secondary: #96A6B6; /* Cadet Gray */
-    --secondary-foreground: #FFFFFF; /* White */
-    --muted: #9C9784; /* Battleship Gray */
-    --muted-foreground: #8C725F; /* Chamoisee */
-    --accent: #C4E4B7; /* Tea Green */
-    --accent-foreground: #8C725F; /* Chamoisee */
-    --border: #9C9784; /* Battleship Gray */
-    --input: #9C9784; /* Battleship Gray */
-    --ring: #8C725F; /* Chamoisee */
+:root { /* === LIGHT MODE (Fintech High Contrast) === */
+    --background: #FFFFFF;
+    --foreground: #0E1229;
+    --card: #FDFDF4;
+    --card-foreground: #0E1229;
+    --primary: #4D8F9E;
+    --primary-foreground: #FFFFFF;
+    --secondary: #F0F5F5;
+    --secondary-foreground: #0E1229;
+    --muted: #E0E0E0;
+    --muted-foreground: #555555;
+    --accent: #4D8F9E;
+    --accent-foreground: #FFFFFF;
+    --border: #E0E0E0;
+    --input: #E0E0E0;
+    --ring: #4D8F9E;
     --radius: 0.625rem;
-    --chart-1: #8C725F; /* Chamoisee */
-    --chart-2: #ADDBAD; /* Celadon */
-    --chart-3: #C4E4B7; /* Tea Green */
-    --chart-4: #96A6B6; /* Cadet Gray */
-    --chart-5: #9C9784; /* Battleship Gray */
-    --popover: #FFFFFF; /* White */
-    --popover-foreground: #8C725F; /* Chamoisee */
-    --destructive: #8C725F; /* Chamoisee (Placeholder) */
-    --destructive-foreground: #FFFFFF; /* White (Placeholder) */
-    --sidebar: #FFFFFF; /* White */
-    --sidebar-foreground: #8C725F; /* Chamoisee */
-    --sidebar-primary: #8C725F; /* Chamoisee */
-    --sidebar-primary-foreground: #FFFFFF; /* White */
-    --sidebar-accent: #C4E4B7; /* Tea Green */
-    --sidebar-accent-foreground: #8C725F; /* Chamoisee */
-    --sidebar-border: #9C9784; /* Battleship Gray */
-    --sidebar-ring: #8C725F; /* Chamoisee */
+    --chart-1: #4D8F9E;
+    --chart-2: #1E222F;
+    --chart-3: #FDFDF4;
+    --chart-4: #0E1229;
+    --chart-5: #999999;
+    --popover: #FFFFFF;
+    --popover-foreground: #0E1229;
+    --destructive: #E53935;
+    --destructive-foreground: #FFFFFF;
+    --sidebar: #FFFFFF;
+    --sidebar-foreground: #0E1229;
+    --sidebar-primary: #4D8F9E;
+    --sidebar-primary-foreground: #FFFFFF;
+    --sidebar-accent: #F0F5F5;
+    --sidebar-accent-foreground: #0E1229;
+    --sidebar-border: #E0E0E0;
+    --sidebar-ring: #4D8F9E;
 }
 
-.dark { /* === DARK MODE === */
-    --background: #8C725F; /* Chamoisee */
-    --foreground: #FFFFFF; /* White */
-    --card: #8C725F; /* Chamoisee */
-    --card-foreground: #FFFFFF; /* White */
-    --primary: #FFFFFF; /* White */
-    --primary-foreground: #8C725F; /* Chamoisee */
-    --secondary: #96A6B6; /* Cadet Gray */
-    --secondary-foreground: #FFFFFF; /* White */
-    --muted: #9C9784; /* Battleship Gray */
-    --muted-foreground: #C4E4B7; /* Tea Green */
-    --accent: #ADDBAD; /* Celadon */
-    --accent-foreground: #8C725F; /* Chamoisee */
-    --border: #9C9784; /* Battleship Gray */
-    --input: #9C9784; /* Battleship Gray */
-    --ring: #FFFFFF; /* White */
-    --chart-1: #FFFFFF; /* White */
-    --chart-2: #C4E4B7; /* Tea Green */
-    --chart-3: #ADDBAD; /* Celadon */
-    --chart-4: #96A6B6; /* Cadet Gray */
-    --chart-5: #9C9784; /* Battleship Gray */
-    --popover: #8C725F; /* Chamoisee */
-    --popover-foreground: #FFFFFF; /* White */
-    --destructive: #ADDBAD; /* Celadon (Placeholder) */
-    --destructive-foreground: #8C725F; /* Chamoisee (Placeholder) */
-    --sidebar: #8C725F; /* Chamoisee */
-    --sidebar-foreground: #FFFFFF; /* White */
-    --sidebar-primary: #FFFFFF; /* White */
-    --sidebar-primary-foreground: #8C725F; /* Chamoisee */
-    --sidebar-accent: #ADDBAD; /* Celadon */
-    --sidebar-accent-foreground: #8C725F; /* Chamoisee */
-    --sidebar-border: #9C9784; /* Battleship Gray */
-    --sidebar-ring: #FFFFFF; /* White */
+.dark { /* === DARK MODE (Fintech Aesthetic) === */
+    --background: #0E1229;
+    --foreground: #FFFFFF;
+    --card: #1E222F;
+    --card-foreground: #FFFFFF;
+    --primary: #4D8F9E;
+    --primary-foreground: #FFFFFF;
+    --secondary: #2C3445;
+    --secondary-foreground: #FFFFFF;
+    --muted: #4A566C;
+    --muted-foreground: #9BB3BC;
+    --accent: #4D8F9E;
+    --accent-foreground: #FFFFFF;
+    --border: #2C3445;
+    --input: #1E222F;
+    --ring: #4D8F9E;
+    --chart-1: #4D8F9E;
+    --chart-2: #9BB3BC;
+    --chart-3: #FDFDF4;
+    --chart-4: #1E222F;
+    --chart-5: #555555;
+    --popover: #1E222F;
+    --popover-foreground: #FFFFFF;
+    --destructive: #E53935;
+    --destructive-foreground: #FFFFFF;
+    --sidebar: #1E222F;
+    --sidebar-foreground: #FFFFFF;
+    --sidebar-primary: #4D8F9E;
+    --sidebar-primary-foreground: #FFFFFF;
+    --sidebar-accent: #0E1229;
+    --sidebar-accent-foreground: #FFFFFF;
+    --sidebar-border: #2C3445;
+    --sidebar-ring: #4D8F9E;
 }
 
 
@@ -162,8 +146,13 @@
         scroll-behavior: smooth;
     }
     
-    /* NEW: Define a utility class for headings using the CSS variable */
-    .font-cravelo {
-        font-family: var(--font-heading);
+    /* NEW UTILITIES FOR GRADIENT TEXT IN HERO SECTION */
+    .bg-clip-text {
+        -webkit-background-clip: text;
+        background-clip: text;
+    }
+
+    .text-transparent {
+        color: transparent;
     }
 }
