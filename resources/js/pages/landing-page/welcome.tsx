@@ -7,6 +7,7 @@ import { Header } from './sections/Header';
 import { HeroSection } from './sections/HeroSection';
 import { AboutSection } from './sections/AboutSection';
 import { FeatureSection } from './sections/FeatureSection';
+import { ProcessSection} from './sections/ProcessSection';
 import { ContactSection } from './sections/ContactSection';
 import { TestimonialSection } from './sections/TestimonialSection';
 import { Footer } from './sections/Footer';
@@ -23,12 +24,12 @@ export default function Welcome({
             <Head title="Welcome">
                 <link rel="preconnect" href="https://fonts.bunny.net" />
                 <link
-                    href="https://fonts.bunny.net/css?family=instrument-sans:400,600,700,800"
+                    href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800"
                     rel="stylesheet"
                 />
             </Head>
             
-            <div className="min-h-screen font-sans">
+            <div className="min-h-screen font-['Plus_Jakarta_Sans',sans-serif]">
                 
                 {/* 1. HEADER (Navigation Bar) */}
                 <Header theme={theme} toggleTheme={toggleTheme} canRegister={canRegister} />
@@ -43,15 +44,18 @@ export default function Welcome({
                     {/* 4. FEATURE SECTION (BUDGETING SIMPLIFIED) */}
                     <FeatureSection />
                     
-                    {/* 5. CONTACT SECTION */}
+                    {/* 5. PROCESS SECTION (Steps) */}
+                    <ProcessSection />
+                    
+                    {/* 6. CONTACT SECTION */}
                     <ContactSection />
                     
-                    {/* 6. TESTIMONIAL/CALLOUT SECTION */}
+                    {/* 7. TESTIMONIAL/CALLOUT SECTION */}
                     <TestimonialSection />
 
                 </main>
 
-                {/* 7. FOOTER */}
+                {/* 8. FOOTER */}
                 <Footer />
             </div>
         </>

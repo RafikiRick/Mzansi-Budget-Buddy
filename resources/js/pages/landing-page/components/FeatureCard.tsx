@@ -1,17 +1,25 @@
 import React from 'react';
+import { LucideIcon } from 'lucide-react';
 
-// 1. Feature Card Component 
-export const FeatureCard: React.FC<{ icon: string; title: string; description: string }> = ({ icon, title, description }) => (
-    <div className="p-6 space-y-3 rounded-xl transition-all duration-300
-                    bg-card text-card-foreground
-                    shadow-2xl shadow-foreground/10 dark:shadow-black/30 
-                    hover:shadow-3xl hover:shadow-primary/20 hover:scale-[1.02] border border-border">
-        <div className="p-3 inline-block rounded-full bg-secondary">
-            <span className="text-2xl text-secondary-foreground">
-                {icon}
-            </span>
+interface FeatureCardProps {
+    icon: LucideIcon;
+    title: string;
+    description: string;
+}
+
+export const FeatureCard: React.FC<FeatureCardProps> = ({ icon: Icon, title, description }) => (
+    // Clean, high-contrast card style
+    <div className="p-6 bg-card rounded-xl border border-border shadow-md transition hover:shadow-primary/20">
+        
+        {/* Icon: Primary color accent */}
+        <div className="mb-4">
+            <Icon className="w-8 h-8 text-primary" />
         </div>
-        <h3 className="text-xl font-bold">{title}</h3>
+        
+        {/* Title */}
+        <h3 className="text-xl font-semibold mb-2 text-foreground">{title}</h3>
+        
+        {/* Description */}
         <p className="text-muted-foreground">{description}</p>
     </div>
 );

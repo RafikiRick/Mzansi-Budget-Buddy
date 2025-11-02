@@ -1,31 +1,66 @@
 import React from 'react';
-import { FeatureCard } from '../components/FeatureCard';
+import { TrendingUp, Goal, ShoppingCart } from 'lucide-react';
+import { FeatureCard } from '../components/FeatureCard'; // Assumes FeatureCard.tsx is saved
 
-const PastelBackground = "/images/pastel.jpg"; 
+const topFeatures = [
+    {
+        icon: TrendingUp, 
+        title: "Track Your Spending - Local Context", 
+        description: "Our intelligent tracker automatically categorizes expenses in ZAR, recognizing local vendors and offering unique categories like 'Spaza Shop', 'Eskom Bills', and 'Taxi Fare' for a true Mzansi financial snapshot."
+    },
+    {
+        icon: Goal, 
+        title: "Set and Smash Savings Goals", 
+        description: "Define achievable goals—from 'R5k for December trip' to 'New Laptop Fund'—and use our progress visualization to stay motivated. We help you automate transfers to hit targets faster."
+    },
+    {
+        icon: ShoppingCart, 
+        title: "Local Price Compare Tool", 
+        description: "Save on essentials with our real-time comparison tool. See which major retailers (Shoprite, Checkers, PnP, and Woolies) offer the best prices before you shop, ensuring you stretch every Rand."
+    }
+];
 
 export const FeatureSection: React.FC = () => (
     <div 
-        className="relative overflow-hidden bg-cover bg-center py-20"
-        style={{ backgroundImage: `url(${PastelBackground})` }}
+        id="features" 
+        className="bg-background py-20"
     >
-        {/* Inner Container for Content */}
-        <section className="px-6 max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-12">
-                <h2 className="text-4xl font-extrabold text-foreground font-cravelo">
-                    Budgeting, simplified for you!
-                </h2>
-                <p className="mt-4 text-xl text-muted-foreground max-w-3xl mx-auto">
-                    Manage your finances and save smarter with local tools.
-                </p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8">
-                <FeatureCard icon="📈" title="Track Your Spending - Local Context" description="Easily log expenses in ZAR with categories tailored for SA: Taxi Fare, Spaza Shop, and Eskom Bills."/>
-                <FeatureCard icon="💰" title="Set and Smash Savings Goals" description="Define goals (e.g., 'R5k for December trip'), visualize progress, and stay motivated."/>
-                <FeatureCard icon="🛒" title="Local Price Compare Tool" description="Find the best deals on essentials across Shoprite, Checkers, PnP, and Woolies."/>
-                <FeatureCard icon="⛽" title="Fuel & Data Alerts" description="Receive timely updates on petrol/diesel prices and data bundle specials."/>
-                <FeatureCard icon="💡" title="Loadshedding Cost Tracker" description="Monitor the true monthly cost of generators, gas, and inverter usage due to power cuts."/>
-                <FeatureCard icon="🤖" title="AI-Powered Insights" description="Get personalized, actionable tips on where to cut costs based on your Mzansi spending."/>
-            </div>
-        </section>
+        <div className="max-w-7xl mx-auto px-6">
+            <section 
+                // Glowing Bounding Box and Hover Effect
+                className="relative z-10 p-10 rounded-2xl border-2 border-border bg-card/70 
+                           transition duration-300 hover:shadow-2xl hover:shadow-primary/30 hover:scale-[1.01]
+                           shadow-xl dark:shadow-primary/30 shadow-foreground/40"
+            >
+                
+                {/* Two-Column Header Layout */}
+                <div className="grid md:grid-cols-2 gap-8 mb-16 items-start">
+                    
+                    <div className="text-left">
+                        <h2 className="text-5xl font-extrabold text-foreground tracking-tight">
+                            Budgeting, simplified for you!
+                        </h2>
+                    </div>
+                    
+                    <div className="text-left pt-2">
+                        <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
+                            Manage your finances and save smarter with local tools designed to help Mzansi families thrive.
+                        </p>
+                    </div>
+                </div>
+                
+                {/* Feature Cards Grid */}
+                <div className="grid md:grid-cols-3 gap-8">
+                    {topFeatures.map((feature, index) => (
+                        <FeatureCard 
+                            key={index}
+                            icon={feature.icon} 
+                            title={feature.title} 
+                            description={feature.description}
+                        />
+                    ))}
+                </div>
+            </section>
+        </div>
     </div>
 );
