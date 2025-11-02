@@ -257,7 +257,7 @@ export default function Dashboard({
 
                     {/* Box 3: Remaining Budget -> Links to /savings-goal */}
                     <MetricCard
-                        title="Remaining Budget"
+                        title="Savings"
                         value={remainingBudget}
                         colorClass="text-blue-600 dark:text-blue-400"
                         href={route('savings.index')} // <--- Hyperlink target
