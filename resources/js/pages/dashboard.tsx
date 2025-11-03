@@ -70,13 +70,12 @@ const MetricCard = ({
 };
 
 // --- Financial Oversight Component ---
-const FinancialOversightBox = ({ income, expenses, incomeByCategory }) => {
+const FinancialOversightBox = ({ income, expenses, incomeByCategory, remainingBudget }) => {
     // ⭐️ LOGIC based on user data ⭐️
     const expenseRatio = (expenses / income) * 100;
 
     let adviceTitle = 'Excellent Financial Health!';
-    let adviceBody =
-        'Your spending is well under control. Keep up the great work saving and growing your wealth.';
+    let adviceBody = 'Your spending is well under control. Keep up the great work saving and growing your wealth.';
     let adviceColor = 'text-green-500 dark:text-green-400';
 
     if (expenseRatio > 50 && expenseRatio <= 70) {
@@ -126,7 +125,7 @@ const FinancialOversightBox = ({ income, expenses, incomeByCategory }) => {
                         Projected Savings:
                     </span>
                     <span className="font-semibold text-blue-500 dark:text-blue-400">
-                        R 5,000.00
+                        R {remainingBudget.toLocaleString('en-ZA', { minimumFractionDigits: 2 })}
                     </span>
                 </div>
             </div>
@@ -275,6 +274,7 @@ export default function Dashboard({
                                 income={totalIncome}
                                 expenses={totalExpenses}
                                 incomeByCategory={incomeByCategory}
+                                remainingBudget={remainingBudget}
                             />
                         </div>
 
