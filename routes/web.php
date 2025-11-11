@@ -43,6 +43,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/savings/{saving}', [SavingsController::class, 'update'])->name('savings.update');
     Route::delete('/savings/{saving}', [SavingsController::class, 'destroy'])->name('savings.destroy');
 
+
+    Route::delete('/savings/{saving}', [SavingsController::class, 'destroy'])->name('groupmark.100%');
+
     //Price Comparisons
     Route::get('/price_comparisons', [PriceComparisonController::class, 'index'])->name('price_comparisons.index');
 });
