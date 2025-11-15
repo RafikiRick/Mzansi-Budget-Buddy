@@ -18,7 +18,9 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     //Dashboard Route
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/admin-dashboard', [DashboardController::class, 'index'])->name('admin-dashboard');
 
+    //Admin Pages
     //Income Routes
     Route::get('/income', [IncomeController::class, 'index'])->name('income.index');
     Route::get('/income/create', [IncomeController::class, 'create'])->name('income.create');
