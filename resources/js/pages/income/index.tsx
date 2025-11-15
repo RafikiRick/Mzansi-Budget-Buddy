@@ -34,6 +34,8 @@ const timeframeOptions = [
     'This Year',
 ];
 
+
+
 // Component for a single income entry
 const IncomeEntry = ({ entry, onEdit, }) => {
     const formatDate = (dateString: string | number | Date) => {
