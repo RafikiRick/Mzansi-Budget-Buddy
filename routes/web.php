@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IncomeController;
@@ -15,10 +16,18 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+// Admin Route Group
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
+
+});
+
+//User Route Group
 Route::middleware(['auth', 'verified'])->group(function () {
     //Dashboard Route
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    //Admin Pages
     //Income Routes
     Route::get('/income', [IncomeController::class, 'index'])->name('income.index');
     Route::get('/income/create', [IncomeController::class, 'create'])->name('income.create');
