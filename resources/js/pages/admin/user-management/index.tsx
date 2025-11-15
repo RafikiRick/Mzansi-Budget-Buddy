@@ -15,8 +15,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 const typeOptions = [
     'All',
     'Sign Up',
-    'Password Change',
-    'Forgot Password',
     'Email Change',
     'User Name Change',
 ];
@@ -30,18 +28,15 @@ const timeframeOptions = [
 
 // Component for a single notification entry
 const NotificationEntry = ({ entry, onApprove, onDeny }) => {
-    const [actionTaken, setActionTaken] = useState<'approved' | 'denied' | null>(null);
     const { post: approve } = useForm();
     const { post: deny } = useForm();
 
     const handleApprove = () => {
-        setActionTaken('approved');
-        approve(route('notifications.approve', entry.id)); // Use entry.id directly
+        approve(route('notifications.approve', entry.id));
     };
 
     const handleDeny = () => {
-        setActionTaken('denied');
-        deny(route('notifications.deny', entry.id)); // Use entry.id directly
+        deny(route('notifications.deny', entry.id));
     };
 
     const formatDate = (dateString: string | number | Date) => {
@@ -54,17 +49,19 @@ const NotificationEntry = ({ entry, onApprove, onDeny }) => {
 
     // Render data based on notification type
     const renderData = () => {
+        const data = typeof entry.data === 'string' ? JSON.parse(entry.data) : entry.data;
+
         switch(entry.type) {
             case 'Email Change':
-                return `${entry.data.old_email} → ${entry.data.new_email}`;
+                return `${data.old_email} → ${data.new_email}`;
             case 'Name Change':
-                return `${entry.data.old_name} → ${entry.data.new_name}`;
+                return `${data.old_name} → ${data.new_name}`;
             case 'Sign Up':
                 return 'New user registration';
             case 'Password Change':
                 return 'Password reset requested';
             default:
-                return JSON.stringify(entry.data);
+                return JSON.stringify(data);
         }
     };
 
@@ -90,19 +87,19 @@ const NotificationEntry = ({ entry, onApprove, onDeny }) => {
 
             {/* Buttons Column - Show only the taken action */}
             <div className="flex space-x-2">
-                {!actionTaken ? (
+                {entry.status === 'pending' ? (
                     <>
-                        <Button variant="outline" size="sm" onClick={() => handleApprove(entry)}>
+                        <Button variant="outline" size="sm" onClick={handleApprove}>
                             Approve
                         </Button>
-                        <Button variant="destructive" size="sm" onClick={() => handleDeny(entry)}>
+                        <Button variant="destructive" size="sm" onClick={handleDeny}>
                             Deny
                         </Button>
                     </>
                 ) : (
-                    <span className={`text-sm font-medium ${actionTaken === 'approved' ? 'text-green-600' : 'text-red-600'}`}>
-                        {actionTaken === 'approved' ? '✓ Approved' : '✗ Denied'}
-                    </span>
+                    <span className={`text-sm font-medium ${entry.status === 'approved' ? 'text-green-600' : 'text-red-600'}`}>
+            {entry.status === 'approved' ? '✓ Approved' : '✗ Denied'}
+        </span>
                 )}
             </div>
         </div>

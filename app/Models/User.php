@@ -60,10 +60,10 @@ class User extends Authenticatable
     protected static function booted()
     {
         static::created(function ($user) {
-            $user->notifications()->createMany([
+            $user->notifications()->create([
                 'type' => 'Sign Up',
                 'status' => 'approved',
-                'data' => []
+                'data' => json_encode([])
             ]);
         });
     }

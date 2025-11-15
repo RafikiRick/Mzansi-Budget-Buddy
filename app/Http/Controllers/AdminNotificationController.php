@@ -21,21 +21,24 @@ class AdminNotificationController extends Controller
     {
         $notification = Notification::with('user')->findOrFail($id);
 
+        // Decode JSON data
+        $data = json_decode($notification->data, true);
+
+
         // Apply the change based on type
         switch($notification->type) {
             case 'Name Change':
-                $notification->user->update(['name' => $notification->data['new_name']]);
+                $notification->user->update(['name' => $data['new_name']]);
                 break;
             case 'Email Change':
                 $notification->user->update([
-                    'email' => $notification->data['new_email'],
-                    'email_verified_at' => null // Require re-verification
+                    'email' => $data['new_email'],
+                    'email_verified_at' => null
                 ]);
                 break;
         }
 
         $notification->update(['status' => 'approved']);
-
         return back()->with('success', 'Change approved');
     }
 
