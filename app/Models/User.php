@@ -24,6 +24,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
+        'status',
+        'data',
     ];
 
     /**
@@ -53,6 +56,19 @@ class User extends Authenticatable
         ];
     }
 
+    /*Notify when new user account is created*/
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            $user->notifications()->create([
+                'type' => 'Sign Up',
+                'status' => 'approved',
+                'data' => json_encode([])
+            ]);
+        });
+    }
+
+
     /*Mapping incomes for the user*/
     public function incomes(): HasMany
     {
@@ -70,5 +86,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Saving::class);
     }
+
+    /*Mapping Notifications for all users*/
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class);
+    }
+
 
 }

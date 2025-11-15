@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminNotificationController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IncomeController;
@@ -19,6 +20,12 @@ Route::get('/', function () {
 // Admin Route Group
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
+
+    // User Management Routes
+    Route::get('/user-management', [AdminNotificationController::class, 'index'])->name('user-management');
+    Route::post('/notifications/{id}/approve', [AdminNotificationController::class, 'approve'])->name('notifications.approve');
+    Route::post('/notifications/{id}/deny', [AdminNotificationController::class, 'deny'])->name('notifications.deny');
+
 
 });
 

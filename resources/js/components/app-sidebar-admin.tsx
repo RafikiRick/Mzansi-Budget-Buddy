@@ -24,7 +24,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'User Management',
-        href: '/user-management',
+        href: '/admin/user-management',
         icon: UserCog,
     },
     {
