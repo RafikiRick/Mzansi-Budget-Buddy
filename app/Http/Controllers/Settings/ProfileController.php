@@ -21,6 +21,9 @@ class ProfileController extends Controller
         return Inertia::render('settings/profile', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => $request->session()->get('status'),
+            'flash' => [ // Add this
+                'success' => $request->session()->get('success')
+            ]
         ]);
     }
 
@@ -29,8 +32,61 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $originalName = $user->name;
+        $originalEmail = $user->email;
 
+        // Fill the model
+        $user->fill($request->validated());
+
+        $hasChanges = false;
+
+        // Check what actually changed
+        if ($user->isDirty('name')) {
+            $user->notifications()
+                ->where('type', 'Name Change')
+                ->where('status', 'pending')
+                ->delete();
+
+            $user->notifications()->create([
+                'type' => 'Name Change',
+                'status' => 'pending',
+                'data' => json_encode([
+                    'old_name' => $originalName,
+                    'new_name' => $request->name
+                ])
+            ]);
+            // Revert the change
+            $user->name = $originalName;
+            $hasChanges = true;
+        }
+
+        if ($user->isDirty('email')) {
+            $user->notifications()
+                ->where('type', 'Email Change')
+                ->where('status', 'pending')
+                ->delete();
+
+
+            $user->notifications()->create([
+                'type' => 'Email Change',
+                'status' => 'pending',
+                'data' => json_encode([
+                    'old_email' => $originalEmail,
+                    'new_email' => $request->email
+                ])
+            ]);
+            // Revert the change
+            $user->email = $originalEmail;
+            $hasChanges = true;
+        }
+
+        if ($hasChanges) {
+            // Don't save - changes were reverted
+            return to_route('profile.edit')->with('success', 'Changes submitted for admin approval');
+        }
+
+        // Only save if no changes needed approval (normal non-name/email changes)
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }

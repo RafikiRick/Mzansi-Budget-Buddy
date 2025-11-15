@@ -13,6 +13,14 @@ import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import { edit } from '@/routes/profile';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Megaphone } from 'lucide-react';
+
+interface PageProps {
+    flash?: {
+        success?: string;
+    }
+}
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -28,7 +36,9 @@ export default function Profile({
     mustVerifyEmail: boolean;
     status?: string;
 }) {
-    const { auth } = usePage<SharedData>().props;
+
+    const { auth, flash } = usePage<PageProps>().props;
+    console.log('All props:', { auth, flash }); // Check what's actually there
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -40,6 +50,16 @@ export default function Profile({
                         title="Profile information"
                         description="Update your name and email address"
                     />
+
+                    {flash?.success && (
+                        <Alert className="bg-green-50 border-green-200 dark:bg-green-950/30 dark:border-green-800">
+                            <Megaphone className="h-4 w-4 text-green-600" />
+                            <AlertTitle className="text-green-800 dark:text-green-400">Success</AlertTitle>
+                            <AlertDescription className="text-green-700 dark:text-green-300">
+                                {flash.success}
+                            </AlertDescription>
+                        </Alert>
+                    )}
 
                     <Form
                         {...ProfileController.update.form()}
