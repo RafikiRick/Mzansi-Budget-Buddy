@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             PriceComparisonSeeder::class,
         ]);
 
-        // User::factory(10)->create();
+
 
         User::firstOrCreate(
             ['email' => 'test@example.com'],

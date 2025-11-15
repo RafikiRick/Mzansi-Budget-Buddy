@@ -27,6 +27,15 @@ class User extends Authenticatable
         'type',
         'status',
         'data',
+        'target_amount',
+        'saved_amount',
+        'deadline',
+        'description',
+        'title',
+        'amount',
+        'category',
+        'date',
+        'source',
     ];
 
     /**

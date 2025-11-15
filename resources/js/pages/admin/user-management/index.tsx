@@ -237,7 +237,7 @@ export default function UserManagement({ notifications }: Props) {
                     </div>
 
                     {/* Notifications List (Scrollable Area) */}
-                    <div className="flex-1 overflow-y-auto">
+                    <div className="h-[500px], h-[600px] overflow-y-auto">
                         {filteredNotifications.length > 0 ? (
                             filteredNotifications.map((entry) => (
                                 <NotificationEntry
