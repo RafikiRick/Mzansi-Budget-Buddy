@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IncomeController;
@@ -15,10 +16,16 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+// Admin Route Group
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
+
+});
+
+//User Route Group
 Route::middleware(['auth', 'verified'])->group(function () {
     //Dashboard Route
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/admin-dashboard', [DashboardController::class, 'index'])->name('admin-dashboard');
 
     //Admin Pages
     //Income Routes
@@ -44,9 +51,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/savings/{saving}/edit', [SavingsController::class, 'edit'])->name('savings.edit');
     Route::put('/savings/{saving}', [SavingsController::class, 'update'])->name('savings.update');
     Route::delete('/savings/{saving}', [SavingsController::class, 'destroy'])->name('savings.destroy');
-
-
-    Route::delete('/savings/{saving}', [SavingsController::class, 'destroy'])->name('groupmark.100%');
 
     //Price Comparisons
     Route::get('/price_comparisons', [PriceComparisonController::class, 'index'])->name('price_comparisons.index');

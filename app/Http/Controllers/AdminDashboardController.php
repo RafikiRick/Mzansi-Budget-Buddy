@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class AdminDashboardController extends Controller
 {
-    // For Anything we need to load on the overview.
+    public function index()
+    {
+        return Inertia::render('admin/dashboard-admin', []);
+    }
 }
