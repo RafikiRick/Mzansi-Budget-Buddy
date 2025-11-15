@@ -15,10 +15,13 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        \Log::info('AdminMiddleware triggered for user: ' . auth()->user()->email);
+        \Log::info('User is_admin: ' . auth()->user()->is_admin);
         if(!auth()->check() || !auth()->user()->is_admin){
+            \Log::info('AdminMiddleware: Access denied');
                 abort(403, 'Unauthorized access.');
             }
-
+        \Log::info('AdminMiddleware: Access granted');
         return $next($request);
     }
 }

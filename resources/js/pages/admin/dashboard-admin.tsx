@@ -1,5 +1,5 @@
 
-import AppLayout from '@/layouts/app-layout';
+import AppLayoutAdmin from '@/layouts/app-layout-admin';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 
@@ -13,7 +13,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 // --- Main Dashboard Component ---
 export default function DashboardAdmin( ) {
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <AppLayoutAdmin breadcrumbs={breadcrumbs}>
             <Head title="Admin Dashboard" />
 
             {/* Your admin dashboard content */}
@@ -27,6 +27,6 @@ export default function DashboardAdmin( ) {
 
                 {/* Add more admin dashboard widgets/components here */}
             </div>
-        </AppLayout>
+        </AppLayoutAdmin>
     );
 }
