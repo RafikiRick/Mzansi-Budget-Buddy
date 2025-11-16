@@ -14,24 +14,17 @@ class SavingsController extends Controller
         ->orderBy('deadline', 'desc')
         ->orderBy('created_at', 'desc')
         ->get();
-        return Inertia::render('savings/index', compact('savings'));    }
+
+        return Inertia::render('savings/index', [
+            'savings' => $savings,
+            'flash' => [
+                'success' => session('success')
+            ]
+        ]);
+    }
 
     public function create(){
         return Inertia::render('savings/create');
-    }
-
-    public function store(Request $request){
-        // Data Validation
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'target_amount' => 'required|numeric|min:0',
-            'saved_amount' => 'required|numeric|min:0',
-            'deadline'=> 'required|date',
-            'description'=> 'required|string|max:255',
-        ]);
-
-        Auth::user()->savings()->create($validated);
-        return redirect()->route('savings.index')->with('success', 'Saving created successfully.');
     }
 
     public function destroy(Saving $saving){
@@ -39,27 +32,43 @@ class SavingsController extends Controller
         return redirect()->route('savings.index')->with('success', 'Saving deleted successfully.');
     }
 
-    public function update(Request $request, Saving $saving){
+    public function edit(Saving $saving){
+        return Inertia::render('savings/edit', compact('saving'));
+    }
+
+    public function store(Request $request){
+        // Data Validation
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|regex:/^[A-Za-z\s]+$/',
             'target_amount' => 'required|numeric|min:0',
             'saved_amount' => 'required|numeric|min:0',
-            'deadline'=> 'required|date',
-            'description'=> 'required|string|max:255',
+            'deadline'=> 'required|date|after_or_equal:today',
+            'description'=> 'nullable|string|max:255',
+        ],[
+            'name.regex' => 'The Goal Name field may only contain letters and spaces.',
+            'deadline.after_or_equal' => 'The Target Date field cannot be in the past.'
         ]);
 
-        $saving->update([
-            'name' => $request->input('name'),
-            'target_amount' => $request->input('target_amount'),
-            'saved_amount' => $request->input('saved_amount'),
-            'deadline' => $request->input('deadline'),
-            'description' => $request->input('description'),
+        Auth::user()->savings()->create($validated);
+        return redirect()->route('savings.index')->with('success', 'Saving created successfully.');
+    }
+
+
+    public function update(Request $request, Saving $saving){
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|regex:/^[A-Za-z\s]+$/',
+            'target_amount' => 'required|numeric|min:0',
+            'saved_amount' => 'required|numeric|min:0',
+            'deadline'=> 'required|required|date|after_or_equal:today',
+            'description'=> 'nullable|string|max:255',
+        ],[
+            'name.regex' => 'The Goal Name field may only contain letters and spaces.',
+            'deadline.after_or_equal' => 'The Target Date field cannot be in the past.'
         ]);
+
+        $saving->update($validated);
 
         return redirect()->route('savings.index')->with('success', 'Saving updated successfully.');
     }
 
-    public function edit(Saving $saving){
-        return Inertia::render('savings/edit', compact('saving'));
-    }
 }
