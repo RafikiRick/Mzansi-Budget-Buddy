@@ -4,6 +4,9 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { useMemo, useState } from 'react';
 import { route } from 'ziggy-js';
+import { usePage } from '@inertiajs/react';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Megaphone } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -112,6 +115,10 @@ interface Income {
 
 interface Props {
     incomes: Income[];
+    flash?: {
+        success?: string;
+        message?: string;
+    }
 }
 
 
@@ -124,7 +131,9 @@ export default function IncomeIndex({ incomes }: Props) {
     const [activeSourceFilter, setActiveSourceFilter] = useState('All');
     const [activeTimeframeFilter, setActiveTimeframeFilter] =
         useState('This Month');
-
+    const { flash } = usePage().props;
+    const successMessage = flash?.success || flash?.message;
+    console.log('All props:', { flash });
     const currentMonthYear = useMemo(() => getCurrentMonthYear(), []);
 
     // --- Filtering Logic with Real Data ---
@@ -158,6 +167,20 @@ export default function IncomeIndex({ incomes }: Props) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Income" />
+
+            {/* Success Alert Section*/}
+            {successMessage && (
+                <div className="m-4">
+                    <Alert className="bg-green-50 border-green-200">
+                        <Megaphone className="h-4 w-4" />
+                        <AlertTitle>Success</AlertTitle>
+                        <AlertDescription>
+                            {successMessage}
+                        </AlertDescription>
+                    </Alert>
+                </div>
+            )}
+
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4 md:p-6">
                 {/* --- 1. Header and Search Bar --- */}
                 <div className="flex flex-col gap-3 p-2">
@@ -178,8 +201,10 @@ export default function IncomeIndex({ incomes }: Props) {
                 </div>
 
                 {/* --- 2. Top Summary Card --- */}
-                <div className="flex cursor-pointer flex-col items-center rounded-xl border border-neutral-200/60 bg-white p-6 shadow-lg transition-all duration-300 hover:scale-[1.01] hover:shadow-2xl dark:border-neutral-700/60 dark:bg-neutral-900">
-                    <div className="flex w-full items-center justify-between rounded-lg bg-green-50 p-4 transition-colors dark:bg-green-950/30">
+                <div
+                    className="flex cursor-pointer flex-col items-center rounded-xl border border-neutral-200/60 bg-white p-6 shadow-lg transition-all duration-300 hover:scale-[1.01] hover:shadow-2xl dark:border-neutral-700/60 dark:bg-neutral-900">
+                    <div
+                        className="flex w-full items-center justify-between rounded-lg bg-green-50 p-4 transition-colors dark:bg-green-950/30">
                         <div>
                             <p className="text-xs font-medium text-neutral-600 dark:text-neutral-400">
                                 Total Income ({activeTimeframeFilter})
@@ -196,20 +221,24 @@ export default function IncomeIndex({ incomes }: Props) {
 
                 {/* --- 3. Income History and Filters --- */}
                 {/*Could we consider a change here to make each item transition instead of the whole block*/}
-                <div className="flex flex-1 flex-col overflow-hidden rounded-xl border border-neutral-200/60 bg-white shadow-lg transition-all duration-300 hover:scale-[1.005] hover:shadow-2xl dark:border-neutral-700/60 dark:bg-neutral-900">
+                <div
+                    className="flex flex-1 flex-col overflow-hidden rounded-xl border border-neutral-200/60 bg-white shadow-lg transition-all duration-300 hover:scale-[1.005] hover:shadow-2xl dark:border-neutral-700/60 dark:bg-neutral-900">
                     {/* Filters and Header */}
-                    <div className="flex items-center justify-between border-b border-neutral-200/60 p-4 dark:border-neutral-700/60">
+                    <div
+                        className="flex items-center justify-between border-b border-neutral-200/60 p-4 dark:border-neutral-700/60">
                         <h3 className="text-lg font-bold text-neutral-800 dark:text-neutral-100">
                             Transactions
                         </h3>
                         <div className="flex items-center space-x-2 text-sm">
                             {/* Source Filter Dropdown */}
                             <div className="group relative">
-                                <button className="flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-700 transition hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-600">
+                                <button
+                                    className="flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-700 transition hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-600">
                                     Source: {activeSourceFilter}{' '}
                                     <span className="ml-1">▼</span>
                                 </button>
-                                <div className="absolute right-0 z-10 mt-2 w-40 rounded-md border border-neutral-200/60 bg-white opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 dark:border-neutral-700 dark:bg-neutral-800">
+                                <div
+                                    className="absolute right-0 z-10 mt-2 w-40 rounded-md border border-neutral-200/60 bg-white opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 dark:border-neutral-700 dark:bg-neutral-800">
                                     {sourceOptions.map((option) => (
                                         <div
                                             key={option}
@@ -226,11 +255,13 @@ export default function IncomeIndex({ incomes }: Props) {
 
                             {/* Timeframe Filter Dropdown */}
                             <div className="group relative">
-                                <button className="flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-700 transition hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-600">
+                                <button
+                                    className="flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-700 transition hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-600">
                                     Timeframe: {activeTimeframeFilter}{' '}
                                     <span className="ml-1">▼</span>
                                 </button>
-                                <div className="absolute right-0 z-10 mt-2 w-40 rounded-md border border-neutral-200/60 bg-white opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 dark:border-neutral-700 dark:bg-neutral-800">
+                                <div
+                                    className="absolute right-0 z-10 mt-2 w-40 rounded-md border border-neutral-200/60 bg-white opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 dark:border-neutral-700 dark:bg-neutral-800">
                                     {timeframeOptions.map((option) => (
                                         <div
                                             key={option}
@@ -262,7 +293,7 @@ export default function IncomeIndex({ incomes }: Props) {
                                 <IncomeEntry
                                     key={entry.id}
                                     entry={entry}
-                                    onEdit={(entry) => console.log('Edit:', entry)} onDelete={undefined}                                />
+                                    onEdit={(entry) => console.log('Edit:', entry)} onDelete={undefined} />
                             ))
                         ) : (
                             <div className="p-6 text-center text-neutral-500 dark:text-neutral-400">

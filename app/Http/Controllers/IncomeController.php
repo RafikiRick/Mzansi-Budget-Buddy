@@ -15,7 +15,12 @@ class IncomeController extends Controller
         ->orderBy('created_at', 'desc')
         ->get();
 
-        return Inertia::render('income/index', compact('incomes'));
+        return Inertia::render('income/index', [
+            'incomes' => $incomes,
+            'flash' => [
+                'success' => session('success')
+            ]
+        ]);
     }
 
     public function create(){

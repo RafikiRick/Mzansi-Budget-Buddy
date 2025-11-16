@@ -52,7 +52,7 @@ export default function Create({income} : IncomeProps) {
                 {/* Header matching modal style */}
                 <div className="mb-6 border-b border-neutral-200 pb-2 dark:border-neutral-700">
                     <h2 className="text-2xl font-bold text-green-600 dark:text-green-400">
-                        Add New Income
+                        Edit {data.title} Income
                     </h2>
                 </div>
 
@@ -149,7 +149,7 @@ export default function Create({income} : IncomeProps) {
                             disabled={processing}
                             className="rounded-lg bg-green-500 px-5 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-green-600 hover:shadow-lg"
                         >
-                            {processing ? 'Saving...' : 'Save Income'}
+                            {processing ? 'Updating...' : 'Update Income'}
                         </Button>
                     </div>
                 </form>
