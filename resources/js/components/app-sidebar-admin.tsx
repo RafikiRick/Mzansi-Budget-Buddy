@@ -29,12 +29,12 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Data Reports',
-        href: '/data-reports',
+        href: '/admin/data-reports',
         icon: Proportions,
     },
     {
         title: 'Automation',
-        href: '/automation',
+        href: '/admin/automation',
         icon: Workflow
     },
     {

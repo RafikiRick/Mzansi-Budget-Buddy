@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import AppLayoutAdmin from '@/layouts/app-layout-admin';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { useMemo, useState } from 'react';
 import { route } from 'ziggy-js';
 
@@ -27,7 +27,9 @@ const timeframeOptions = [
 ];
 
 // Component for a single notification entry
-const NotificationEntry = ({ entry, onApprove, onDeny }) => {
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+const NotificationEntry = ({ entry }) => {
     const { post: approve } = useForm();
     const { post: deny } = useForm();
 
@@ -49,9 +51,12 @@ const NotificationEntry = ({ entry, onApprove, onDeny }) => {
 
     // Render data based on notification type
     const renderData = () => {
-        const data = typeof entry.data === 'string' ? JSON.parse(entry.data) : entry.data;
+        const data =
+            typeof entry.data === 'string'
+                ? JSON.parse(entry.data)
+                : entry.data;
 
-        switch(entry.type) {
+        switch (entry.type) {
             case 'Email Change':
                 return `${data.old_email} → ${data.new_email}`;
             case 'Name Change':
@@ -64,7 +69,6 @@ const NotificationEntry = ({ entry, onApprove, onDeny }) => {
                 return JSON.stringify(data);
         }
     };
-
 
     return (
         <div className="group flex cursor-pointer items-center justify-between border-b border-neutral-200/60 p-4 transition duration-200 last:border-b-0 hover:bg-neutral-100/50 dark:border-neutral-700/60 dark:hover:bg-neutral-800">
@@ -89,17 +93,29 @@ const NotificationEntry = ({ entry, onApprove, onDeny }) => {
             <div className="flex space-x-2">
                 {entry.status === 'pending' ? (
                     <>
-                        <Button variant="outline" size="sm" onClick={handleApprove}>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={handleApprove}
+                        >
                             Approve
                         </Button>
-                        <Button variant="destructive" size="sm" onClick={handleDeny}>
+                        <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={handleDeny}
+                        >
                             Deny
                         </Button>
                     </>
                 ) : (
-                    <span className={`text-sm font-medium ${entry.status === 'approved' ? 'text-green-600' : 'text-red-600'}`}>
-            {entry.status === 'approved' ? '✓ Approved' : '✗ Denied'}
-        </span>
+                    <span
+                        className={`text-sm font-medium ${entry.status === 'approved' ? 'text-green-600' : 'text-red-600'}`}
+                    >
+                        {entry.status === 'approved'
+                            ? '✓ Approved'
+                            : '✗ Denied'}
+                    </span>
                 )}
             </div>
         </div>

@@ -8,6 +8,7 @@ use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\SavingsController;
 use App\Http\Controllers\PriceComparisonController;
+use App\Http\Controllers\DataReportController;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
@@ -26,7 +27,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/notifications/{id}/approve', [AdminNotificationController::class, 'approve'])->name('notifications.approve');
     Route::post('/notifications/{id}/deny', [AdminNotificationController::class, 'deny'])->name('notifications.deny');
 
+    // Data Reports Routes
+    Route::get('/data-reports', [DataReportController::class, 'index'])->name('data-reports.index');
+    Route::get('/data-reports/preview/user-growth', [DataReportController::class, 'previewUserGrowth'])->name('data-reports.preview.user-growth');
+    Route::get('/data-reports/download/user-growth', [DataReportController::class, 'downloadUserGrowth'])->name('data-reports.download.user-growth');
+    Route::get('/data-reports/preview/financial-overview', [DataReportController::class, 'previewFinancialOverview'])->name('data-reports.preview.financial-overview');
+    Route::get('/data-reports/download/financial-overview', [DataReportController::class, 'downloadFinancialOverview'])->name('data-reports.download.financial-overview');
 
+    Route::get('/data-reports/preview/savings-performance', [DataReportController::class, 'previewSavingsPerformance'])->name('data-reports.preview.savings-performance');
+    Route::get('/data-reports/download/savings-performance', [DataReportController::class, 'downloadSavingsPerformance'])->name('data-reports.download.savings-performance');
 });
 
 //User Route Group
