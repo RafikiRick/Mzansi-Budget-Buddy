@@ -15,7 +15,12 @@ class ExpensesController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return Inertia::render('expenses/index', compact('expenses'));
+        return Inertia::render('expenses/index', [
+            'expenses' => $expenses,
+            'flash' => [
+                'success' => session('success')
+            ]
+        ]);
     }
 
     public function create(){

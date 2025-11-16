@@ -98,6 +98,7 @@ interface Expense {
 interface PageProps {
     flash?: {
         success?: string;
+        message?: string;
     };
     expenses?: Expense[];
 }
@@ -105,8 +106,8 @@ interface PageProps {
 export default function ExpensesIndex({ expenses = []}: PageProps) {
     const [searchQuery, setSearchQuery] = useState('');
     const [activeFilter, setActiveFilter] = useState('All');
-    const { flash } = usePage<PageProps>().props;
-
+    const { flash } = usePage().props;
+    const successMessage = flash?.success || flash?.message;
     // Get current date for header
     const currentMonthYear = useMemo(() => getCurrentMonthYear(), []);
 
@@ -131,13 +132,14 @@ export default function ExpensesIndex({ expenses = []}: PageProps) {
             <Head title="Expenses" />
 
             {/* Flash Message */}
-            {flash?.success && (
+            {/* Success Alert Section*/}
+            {successMessage && (
                 <div className="m-4">
-                    <Alert className="bg-green-50 border-green-200 dark:bg-green-950/30 dark:border-green-800">
-                        <Megaphone className="h-4 w-4 text-green-600" />
-                        <AlertTitle className="text-green-800 dark:text-green-400">Success</AlertTitle>
-                        <AlertDescription className="text-green-700 dark:text-green-300">
-                            {flash.success}
+                    <Alert className="bg-green-50 border-green-200">
+                        <Megaphone className="h-4 w-4" />
+                        <AlertTitle>Success</AlertTitle>
+                        <AlertDescription>
+                            {successMessage}
                         </AlertDescription>
                     </Alert>
                 </div>

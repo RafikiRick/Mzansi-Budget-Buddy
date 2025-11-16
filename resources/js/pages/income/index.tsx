@@ -133,7 +133,6 @@ export default function IncomeIndex({ incomes }: Props) {
         useState('This Month');
     const { flash } = usePage().props;
     const successMessage = flash?.success || flash?.message;
-    console.log('All props:', { flash });
     const currentMonthYear = useMemo(() => getCurrentMonthYear(), []);
 
     // --- Filtering Logic with Real Data ---
