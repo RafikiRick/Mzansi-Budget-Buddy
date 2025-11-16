@@ -49,8 +49,8 @@ class IncomeController extends Controller
             'source' => 'required|string|max:255',
             'date' => 'required|date|before_or_equal:today',
         ], [
-            'title.regex' => 'The Income Name field may only contain letters and spaces.',
-            'date.before_or_equal' => 'The date cannot be in the future.',
+            'title.regex' => 'The Income Description field may only contain letters and spaces.',
+            'date.before_or_equal' => 'The Date field cannot be in the future.',
         ]);
 
         Auth::user()->incomes()->create($validated);
@@ -69,8 +69,8 @@ class IncomeController extends Controller
             'source' => 'required|string|max:255',
             'date' => 'required|date|before_or_equal:today',
         ], [
-            'title.regex' => 'The Income Name field may only contain letters and spaces.',
-            'date.before_or_equal' => 'The date cannot be in the future.',
+            'title.regex' => 'The Income Description field may only contain letters and spaces.',
+            'date.before_or_equal' => 'The Date field cannot be in the future.',
         ]);
 
         $income->update($validated);
