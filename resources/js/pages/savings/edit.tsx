@@ -59,10 +59,10 @@ export default function Edit({ saving }: SavingsProps) {
                 <form className="space-y-4" onSubmit={handleUpdate}>
                     {/* Display Errors */}
                     {Object.keys(errors).length > 0 && (
-                        <Alert variant="destructive">
-                            <Siren className="h-4 w-4" />
+                        <Alert className="bg-red-50 border-red-200 text-red-800 dark:bg-red-950/30 dark:border-red-800 dark:text-red-400">
+                            <Siren className="h-4 w-4 text-red-600 dark:text-red-400" />
                             <AlertTitle>Error</AlertTitle>
-                            <AlertDescription>
+                            <AlertDescription className="text-red-700 dark:text-red-300">
                                 <ul>
                                     {Object.entries(errors).map(([key, message]) => (
                                         <li key={key}>{message as string}</li>

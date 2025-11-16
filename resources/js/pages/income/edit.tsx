@@ -52,17 +52,17 @@ export default function Create({income} : IncomeProps) {
                 {/* Header matching modal style */}
                 <div className="mb-6 border-b border-neutral-200 pb-2 dark:border-neutral-700">
                     <h2 className="text-2xl font-bold text-green-600 dark:text-green-400">
-                        Add New Income
+                        Edit {data.title} Income
                     </h2>
                 </div>
 
                 <form className="space-y-4" onSubmit={handleUpdate}>
                     {/* Display Errors */}
                     {Object.keys(errors).length > 0 && (
-                        <Alert variant="destructive">
-                            <Siren className="h-4 w-4" />
+                        <Alert className="bg-red-50 border-red-200 text-red-800 dark:bg-red-950/30 dark:border-red-800 dark:text-red-400">
+                            <Siren className="h-4 w-4 text-red-600 dark:text-red-400" />
                             <AlertTitle>Error</AlertTitle>
-                            <AlertDescription>
+                            <AlertDescription className="text-red-700 dark:text-red-300">
                                 <ul>
                                     {Object.entries(errors).map(([key, message]) => (
                                         <li key={key}>{message as string}</li>
@@ -149,7 +149,7 @@ export default function Create({income} : IncomeProps) {
                             disabled={processing}
                             className="rounded-lg bg-green-500 px-5 py-2 text-sm font-semibold text-white shadow-md transition hover:bg-green-600 hover:shadow-lg"
                         >
-                            {processing ? 'Saving...' : 'Save Income'}
+                            {processing ? 'Updating...' : 'Update Income'}
                         </Button>
                     </div>
                 </form>

@@ -15,25 +15,20 @@ class IncomeController extends Controller
         ->orderBy('created_at', 'desc')
         ->get();
 
-        return Inertia::render('income/index', compact('incomes'));
+        return Inertia::render('income/index', [
+            'incomes' => $incomes,
+            'flash' => [
+                'success' => session('success')
+            ]
+        ]);
     }
 
     public function create(){
         return Inertia::render('income/create');
     }
 
-    public function store(Request $request){
-        //Data Validation
-        $validated = $request->validate([
-            'amount' => 'required|numeric|min:0',
-            'title' => 'required|string|max:255',
-            'source' => 'required|string|max:255',
-            'date' => 'required|date',
-        ]);
-
-        //Use Validated Data
-        Auth::user()->incomes()->create($validated);
-        return redirect()->route('income.index')->with('success', 'Income created successfully.');
+    public function edit(Income $income){
+        return Inertia::render('income/edit', compact('income'));
     }
 
     public function destroy(Income $income){
@@ -41,25 +36,45 @@ class IncomeController extends Controller
         return redirect()->route('income.index')->with('success', 'Income deleted successfully.');
     }
 
+    public function store(Request $request){
+        //Data Validation
+        $validated = $request->validate([
+            'amount' => 'required|numeric|min:0',
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[A-Za-z\s]+$/'
+            ],
+            'source' => 'required|string|max:255',
+            'date' => 'required|date|before_or_equal:today',
+        ], [
+            'title.regex' => 'The Income Description field may only contain letters and spaces.',
+            'date.before_or_equal' => 'The Date field cannot be in the future.',
+        ]);
+
+        Auth::user()->incomes()->create($validated);
+        return redirect()->route('income.index')->with('success', 'Income created successfully.');
+    }
+
     public function update(Request $request, Income $income){
         $validated = $request->validate([
             'amount' => 'required|numeric|min:0',
-            'title' => 'required|string|max:255',
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[A-Za-z\s]+$/'
+            ],
             'source' => 'required|string|max:255',
-            'date' => 'required|date',
+            'date' => 'required|date|before_or_equal:today',
+        ], [
+            'title.regex' => 'The Income Description field may only contain letters and spaces.',
+            'date.before_or_equal' => 'The Date field cannot be in the future.',
         ]);
 
-        $income->update([
-            'amount' => $request->input('amount'),
-            'title' => $request->input('title'),
-            'source' => $request->input('source'),
-            'date' => $request->input('date'),
-        ]);
-
+        $income->update($validated);
         return redirect()->route('income.index')->with('success', 'Income updated successfully.');
     }
 
-    public function edit(Income $income){
-        return Inertia::render('income/edit', compact('income'));
-    }
 }

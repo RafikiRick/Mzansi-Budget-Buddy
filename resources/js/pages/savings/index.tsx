@@ -119,6 +119,7 @@ interface SavingsGoal {
 interface PageProps {
     flash?: {
         success?: string;
+        message?: string;
     };
     savings: SavingsGoal[];
 }
@@ -126,7 +127,8 @@ interface PageProps {
 export default function SavingsGoalIndex({ savings }: PageProps) {
     const [searchQuery, setSearchQuery] = useState('');
     const [sortBy, setSortBy] = useState('Deadline');
-    const { flash } = usePage<PageProps>().props;
+    const { flash } = usePage().props;
+    const successMessage = flash?.success || flash?.message;
 
     const currentDate = useMemo(() => getCurrentDate(), []);
 

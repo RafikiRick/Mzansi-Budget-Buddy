@@ -38,7 +38,7 @@ export default function Profile({
 }) {
 
     const { auth, flash } = usePage<PageProps>().props;
-    console.log('All props:', { auth, flash }); // Check what's actually there
+    console.log('All props:', { auth, flash });
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
