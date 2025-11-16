@@ -1,8 +1,15 @@
 import AppLayoutAdmin from '@/layouts/app-layout-admin';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
+import {
+    PolarAngleAxis,
+    PolarGrid,
+    PolarRadiusAxis,
+    Radar,
+    RadarChart,
+    ResponsiveContainer,
+} from 'recharts';
 import { route } from 'ziggy-js';
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -91,23 +98,37 @@ const FinancialStats = ({ financialStats }) => {
         <div className="space-y-4">
             {/* Total Platform Income */}
             <div className="rounded-lg border border-neutral-200/60 bg-gradient-to-br from-green-50 to-green-100/50 p-4 dark:border-neutral-700/60 dark:from-green-950/20 dark:to-green-900/30">
-                <h4 className="text-sm font-medium text-neutral-600 dark:text-neutral-400">Total Platform Income</h4>
+                <h4 className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+                    Total Platform Income
+                </h4>
                 <p className="text-2xl font-bold text-green-600 dark:text-green-400">
-                    R {financialStats.totalPlatformIncome.toLocaleString('en-ZA', { minimumFractionDigits: 2 })}
+                    R{' '}
+                    {financialStats.totalPlatformIncome.toLocaleString(
+                        'en-ZA',
+                        { minimumFractionDigits: 2 },
+                    )}
                 </p>
             </div>
 
             {/* Total Platform Expenses */}
             <div className="rounded-lg border border-neutral-200/60 bg-gradient-to-br from-red-50 to-red-100/50 p-4 dark:border-neutral-700/60 dark:from-red-950/20 dark:to-red-900/30">
-                <h4 className="text-sm font-medium text-neutral-600 dark:text-neutral-400">Total Platform Expenses</h4>
+                <h4 className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+                    Total Platform Expenses
+                </h4>
                 <p className="text-2xl font-bold text-red-600 dark:text-red-400">
-                    R {financialStats.totalPlatformExpenses.toLocaleString('en-ZA', { minimumFractionDigits: 2 })}
+                    R{' '}
+                    {financialStats.totalPlatformExpenses.toLocaleString(
+                        'en-ZA',
+                        { minimumFractionDigits: 2 },
+                    )}
                 </p>
             </div>
 
             {/* Average Savings Rate */}
             <div className="rounded-lg border border-neutral-200/60 bg-gradient-to-br from-blue-50 to-blue-100/50 p-4 dark:border-neutral-700/60 dark:from-blue-950/20 dark:to-blue-900/30">
-                <h4 className="text-sm font-medium text-neutral-600 dark:text-neutral-400">Average Savings Rate</h4>
+                <h4 className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+                    Average Savings Rate
+                </h4>
                 <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
                     {financialStats.averageSavingsRate.toFixed(1)}%
                 </p>
@@ -115,7 +136,9 @@ const FinancialStats = ({ financialStats }) => {
 
             {/* Savings Goal Success Rate */}
             <div className="rounded-lg border border-neutral-200/60 bg-gradient-to-br from-purple-50 to-purple-100/50 p-4 dark:border-neutral-700/60 dark:from-purple-950/20 dark:to-purple-900/30">
-                <h4 className="text-sm font-medium text-neutral-600 dark:text-neutral-400">Savings Goal Success</h4>
+                <h4 className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+                    Savings Goal Success
+                </h4>
                 <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">
                     {financialStats.savingsGoalSuccessRate.toFixed(1)}%
                 </p>
@@ -125,11 +148,28 @@ const FinancialStats = ({ financialStats }) => {
 };
 
 const RadarChartComponent = ({ userGrowth }) => {
-    // Transform your userGrowth data to match Recharts format
-    const chartData = userGrowth.map(item => ({
-        month: new Date(item.month + '-01').toLocaleDateString('en-US', { month: 'short' }),
-        users: item.count
+    // Sort Data
+
+    const sortedUserGrowth = [...userGrowth].sort((a, b) =>
+        a.month.localeCompare(b.month),
+    );
+
+    const chartData = sortedUserGrowth.map((item) => ({
+        month: new Date(item.month + '-01').toLocaleDateString('en-US', {
+            month: 'short',
+        }),
+        users: item.count,
     }));
+
+    const latestGrowth =
+        sortedUserGrowth.length > 1
+            ? (
+                  ((sortedUserGrowth[sortedUserGrowth.length - 1].count -
+                      sortedUserGrowth[sortedUserGrowth.length - 2].count) /
+                      sortedUserGrowth[sortedUserGrowth.length - 2].count) *
+                  100
+              ).toFixed(1)
+            : '0';
 
     return (
         <div className="space-y-4">
@@ -170,7 +210,7 @@ const RadarChartComponent = ({ userGrowth }) => {
                     Last 6 months
                 </span>
                 <span className="font-medium text-green-600 dark:text-green-400">
-                    Trending up by 5.2% this month
+                    Trending up by {latestGrowth}% this month
                 </span>
             </div>
         </div>
@@ -199,20 +239,20 @@ export default function DashboardAdmin({
                                     Recent Notifications
                                 </h3>
                                 <div className="h-[calc(100vh-200px)] overflow-y-auto">
-                                <Link href={route('user-management')}>
-                                    {recentNotifications.length > 0 ? (
-                                        recentNotifications.map((entry) => (
-                                            <NotificationEntry
-                                                key={entry.id}
-                                                entry={entry}
-                                            />
-                                        ))
-                                    ) : (
-                                        <p className="py-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
-                                            No recent notifications
-                                        </p>
-                                    )}
-                                </Link>
+                                    <Link href={route('user-management')}>
+                                        {recentNotifications.length > 0 ? (
+                                            recentNotifications.map((entry) => (
+                                                <NotificationEntry
+                                                    key={entry.id}
+                                                    entry={entry}
+                                                />
+                                            ))
+                                        ) : (
+                                            <p className="py-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
+                                                No recent notifications
+                                            </p>
+                                        )}
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -229,7 +269,9 @@ export default function DashboardAdmin({
                                 <h3 className="mb-4 text-lg font-semibold text-neutral-800 dark:text-neutral-100">
                                     Platform Financial Overview
                                 </h3>
-                                <FinancialStats financialStats={financialStats} />
+                                <FinancialStats
+                                    financialStats={financialStats}
+                                />
                             </div>
                         </div>
                     </div>
