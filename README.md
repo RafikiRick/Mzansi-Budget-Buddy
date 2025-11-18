@@ -10,7 +10,7 @@ Third year Bsc IT project using Laravel + React.
 4. Copy `.env.example` to `.env` (In project folder, top level ./) - windows command `copy .env.example .env` 
 5. Generate app key: `php artisan key:generate`
 6. Run migrations: `php artisan migrate`
-7. Run seeding `php artisand db:seed`
+7. Run seeding `php artisan db:seed`
 8. Start development: `npm run dev` and `php artisan serve` - Not using `composer run dev` as it is slower for hot reloading
 
 ## Team Members
